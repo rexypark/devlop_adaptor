@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SND">
+
+	<select id="IF_001_SELECT" parameterType="string" resultType="hashmap">
+		SELECT
+		* FROM SND
+		  
+	</select>
+	
+	
+	<update id="IF_001_SOURCE_UPDATE" parameterType="hashmap" >
+        UPDATE 
+        		SND SET
+        		
+        		 ESB_TRST_FG='P' 
+        		,ESB_TRST_ID=#{ESB_TRST_ID}
+        		,ESB_TRST_ILSI=#{ESB_TRST_ILSI} 
+        		
+        		WHERE
+        		ESB_TRST_SER=#{ESB_TRST_SER}
+	</update>
+	 
+	<update id="IF_001_SOURCE_RESULT_UPDATE" parameterType="hashmap" >
+       UPDATE 
+        		SND SET
+        		
+        		ESB_TRST_FG=#{ESB_TRST_FG,jdbcType=VARCHAR} 
+        	   ,ESB_COMPLETE_ILSI=#{ESB_COMPLETE_ILSI,jdbcType=VARCHAR}
+        		
+        		WHERE
+        		  ESB_TRST_SER=#{ESB_TRST_SER,jdbcType=VARCHAR}
+	</update>
+	
+	<insert id="IF_001_INSERT" parameterType="hashmap" >
+		INSERT INTO RCV (
+        		 ESB_TRST_FG
+        		,ESB_COMPLETE_ILSI
+        		,LAST_CHANGE_ILSI
+        		,ESB_TRST_ILSI
+        		,ESB_TRST_ID
+        		,ESB_TRST_SER
+        		,DATAS
+        		,FILE_NM
+        		,USR_NAME
+        		
+        		)VALUES(
+        		
+        		 #{ESB_TRST_FG}
+        		,#{ESB_COMPLETE_ILSI,jdbcType=VARCHAR}
+        		,#{LAST_CHANGE_ILSI}
+        		,#{ESB_TRST_ILSI}
+        		,#{ESB_TRST_ID}
+        		,#{ESB_TRST_SER}
+        		,#{DATAS,jdbcType=VARCHAR}
+        		,#{FILE_NM}
+        		,#{USR_NAME,jdbcType=VARCHAR}
+        		)
+	
+	</insert>
+	
+	
+</mapper>
+

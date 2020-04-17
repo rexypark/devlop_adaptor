@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd" >
+
+  <context:annotation-config />
+
+	<bean id="iService" class="com.indigo.esb.adaptor.IndigoAdaptor" >
+		<property name="interfaceList" ref="interfaceList" />
+		<property name="onSignalPatternMap" ref="onSignalPatternMap" />
+		<property name="onMessagePatternMap" ref="onMessagePatternMap" />
+	</bean>
+	 
+	 <util:map id="onSignalPatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="fileSendPattern">
+			<util:list id="onSignalList">
+				<bean class="com.indigo.esb.adaptor.file.DefaultOnSignalFilePollImpl" >
+					<property name="serverInfo" value="127.0.0.1:24212" />
+				</bean>
+				<bean class="com.indigo.esb.adaptor.file.DefaultOnSignalFileSendImpl" />
+				<bean class="com.indigo.esb.adaptor.file.DefaultOnSignalFileAfterSendImpl" />
+			</util:list>
+		</entry>
+	</util:map>
+		
+	
+	<util:map id="onMessagePatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="fileResultProcessPattern">
+			<util:list id="onMessageList">
+				<bean class="com.indigo.esb.adaptor.file.DefaultOnMessageFileResultProcessImpl" />
+			</util:list>
+		</entry>
+	</util:map>
+		
+	<util:list id="interfaceList">
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="IF_001" />
+			<property name="targetDestinationName" value="ROUTE.IN.OTO" />
+			<property name="sendDir" value="d:/test/send" />
+			<property name="tmpDir" value="d:/test/agent-snd/temp" />
+			<property name="scsDir" value="d:/test/agent-snd/scs" />
+			<property name="errDir" value="d:/test/agent-snd/err" />
+			<property name="onSignalPatternName" value="fileSendPattern" />
+			<property name="onMessagePatternName" value="fileResultProcessPattern" />
+		</bean>
+	</util:list>
+	
+	
+	<!-- ============================ ListenerContainer ============================= -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+	</bean>
+
+	<bean id="jmsConnectionFactory" class="com.indigo.indigomq.pool.PooledConnectionFactory"
+		destroy-method="stop">
+		<property name="connectionFactory">
+			<bean class="com.indigo.indigomq.IndigoMQConnectionFactory">
+				<property name="brokerURL">
+					<value><![CDATA[failover:(tcp://127.0.0.1:24211)?initialReconnectDelay=5000&randomize=false]]></value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="dataListenerContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="messageListener" ref="iService" />
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="destinationName" value="RPL.DB.OTO" />
+		<property name="concurrentConsumers" value="1" />
+		<property name="sessionTransacted" value="true" />
+		<property name="receiveTimeout" value="3000" />
+<!-- 		<property name="messageSelector" value="dest_id='IF_001'" /> -->
+	</bean>
+
+	<bean id="onSignalErrorJobListener" class="com.indigo.esb.signal.OnSignalErrorJobListener">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+	</bean>
+<!-- 	<bean id="sch" class="com.indigo.esb.schedule.OldScheduleBean"> -->
+<!-- 		<property name="targetObject" ref="iService" /> -->
+<!-- 		<property name="timeList"> -->
+<!-- 			<list> -->
+<!--  				<value>[startDelay=0,interval=10000,args=IF_001,concurrent=false]</value> <value>[cronExpression=0  -->
+<!-- 					* * * * ?,argrument=IF_CRON_0Sec,concurrent=false, targetMethod=onSignal]</value> -->
+<!-- 				<value>0,10000,IF_001,false</value> -->
+<!--			<value>0/5 * * * * ?,IF_002,false</value> -->
+<!-- 			</list> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+
+	 <bean id="sch" class="com.indigo.esb.schedule.OldScheduleBean">
+		<property name="targetObject" ref="iService"/>
+		<property name="threadCount" value="1"/>
+		<property name="timeList">
+			<list>
+			<value>0,10000,IF_001,false</value>
+<!-- 				<value>[startDelay=0, interval=10000 ,args=IF_001, concurrent=false,targetMethod=onSignal]</value> -->
+			</list>
+		</property>
+	</bean>
+</beans>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:annotation-config />
+
+	<bean id="iService" class="com.indigo.esb.adaptor.IndigoAdaptor">
+		<property name="interfaceList" ref="interfaceList" />
+		<property name="onSignalPatternMap" ref="onSignalPatternMap" />
+		<property name="onMessagePatternMap" ref="onMessagePatternMap" />
+	</bean>
+	
+	<util:map id="onSignalPatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="ifTableSendPattern">
+		<util:list id="OnSignalList">
+			<bean class="com.indigo.esb.adaptor.db.DefaultOnSignalDBPollImpl" />
+			<bean class="com.indigo.esb.adaptor.db.DefaultOnSignalDBSendImpl" />
+			<bean class="com.indigo.esb.adaptor.db.DefaultOnSignalDBAfterSendImpl" />
+			<bean class="com.indigo.esb.adaptor.db.DefaultOnSignalDBAfterCallprocImpl" />
+		</util:list>
+		</entry> 
+		<entry key="ifTableSendPattern">
+		<util:list id="OnSignalList1">
+			<bean class="com.indigo.esb.adaptor.db.DefaultOnSignalDBPollImpl" />
+			<bean class="com.indigo.esb.adaptor.db.DefaultOnSignalDBSendImpl" />
+			<bean class="com.indigo.esb.adaptor.db.DefaultOnSignalDBAfterCallprocImpl" />
+		</util:list>
+		</entry> 
+		<entry key="ifTableSendPattern">
+		<util:list id="OnSignalList2">
+			<bean class="com.indigo.esb.adaptor.db.DefaultOnSignalDBPollImpl" />
+			<bean class="com.indigo.esb.adaptor.db.DefaultOnSignalDBSendImpl" />
+			<bean class="com.indigo.esb.adaptor.db.DefaultOnSignalDBAfterSendImpl" />
+		</util:list>
+		</entry> 
+		<entry key="onSignalPatternMapFile">
+		<util:list id="OnSignalListfile">
+			<bean class="com.indigo.esb.adaptor.db.DefaultOnSignalFilePollImpl" />
+			<bean class="com.indigo.esb.adaptor.db.DefaultOnSignalDBSendImpl" />
+			<bean class="com.indigo.esb.adaptor.db.DefaultOnSignalDBAfterSendImpl" />
+		</util:list>
+		</entry> 
+	</util:map>
+	
+	<util:map id="onMessagePatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="resultUpdatePattern">
+			<util:list id="onMessageList">
+				<bean class="com.indigo.esb.adaptor.db.DefaultOnMessageDBResultProcessImpl" />
+			</util:list>
+		</entry>
+	</util:map>
+	
+
+
+	<bean id="superBean" abstract="true">
+		<property name="targetDestinationName" value="ROUTE.IN.OTO" />
+		<property name="onMessagePatternName" value="resultUpdatePattern" />
+		<property name="addDataMap">
+			<map>
+				<entry key="TX_ID" value="ESB_TRST_ID" />
+				<entry key="INIT_TIME" value="ESB_TRST_ILSI" />
+			</map>
+		</property>
+	</bean>
+
+
+	<util:list id="interfaceList">
+		<bean class="com.indigo.esb.config.DBInterfaceInfo" parent="superBean">
+			<property name="interfaceId" value="IF_001" />
+		<property name="onSignalPatternName" value="ifTableSendPattern" />
+			<property name="tableName" value="SND" />
+		</bean>
+		<bean class="com.indigo.esb.config.DBInterfaceInfo" parent="superBean">
+			<property name="interfaceId" value="IF_001" />
+		<property name="onSignalPatternName" value="onSignalPatternMapFile" />
+			<property name="tableName" value="SND" />
+		</bean>
+	</util:list>
+
+	<bean id="tableMetaData" class="com.indigo.esb.db.TableMetaDataInfo" init-method="init">
+		<property name="interfaceList" ref="interfaceList" />
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="datasource" />
+		<property name="mapperLocations" value="db/mybatis/sqlMap/dynamicQuery.xml" />
+		<property name="configLocation" value="db/mybatis/sqlMap/configure.xml" />
+	</bean>
+
+	<!-- 3. sqlSession -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="dbcpNativeJdbcExtractor"
+		class="org.springframework.jdbc.support.nativejdbc.CommonsDbcpNativeJdbcExtractor" />
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="datasource" />
+	</bean>
+
+	<aop:config>
+		<aop:advisor
+			pointcut="execution(* com.indigo.esb.adaptor.strategy.OnSignalStrategy.onStart(..))"
+			advice-ref="txAdvice" />
+
+		<aop:advisor
+			pointcut="execution(* com.indigo.esb.adaptor.strategy.OnMessageStrategy.process(..))"
+			advice-ref="txAdvice" />
+	</aop:config>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+
+	<!-- ============================ ListenerContainer ============================= -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+	</bean>
+
+	<bean id="jmsConnectionFactory" class="com.indigo.indigomq.pool.PooledConnectionFactory"
+		destroy-method="stop">
+		<property name="connectionFactory">
+			<bean class="com.indigo.indigomq.IndigoMQConnectionFactory">
+				<property name="brokerURL">
+					<value><![CDATA[failover:(tcp://10.1.3.210:24211)?initialReconnectDelay=5000&randomize=false]]></value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="dataListenerContainer"
+		class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="messageListener" ref="iService" />
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="destinationName" value="RPL.DB.OTO" />
+		<property name="concurrentConsumers" value="1" />
+		<property name="sessionTransacted" value="true" />
+		<property name="receiveTimeout" value="3000" />
+		<property name="messageSelector" value="dest_id='IF_001'" />
+	</bean>
+
+	<bean id="datasource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="url" value="jdbc:oracle:thin:@192.168.56.101:1521:xe" />
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="username" value="snd" />
+		<property name="password" value="snd" />
+		<property name="defaultAutoCommit" value="false" />
+		<property name="maxWait" value="-1" />
+		<property name="initialSize" value="1" />
+		<property name="maxActive" value="8" />
+		<property name="minIdle" value="1" />
+		<property name="maxIdle" value="8" />
+		<property name="validationQuery" value="select 1 from dual" />
+		<property name="timeBetweenEvictionRunsMillis" value="10000" />
+		<property name="minEvictableIdleTimeMillis" value="1800000" />
+		<property name="numTestsPerEvictionRun" value="3" />
+	</bean>
+
+	  <bean id="adaptorBean" class="com.mb.indigo2.springsupport.AdaptorConfigBean">
+	      <property name="adaptorName" value="AS_DB"/>
+	        <property name="port" value="34534"></property>
+	        <property name="heartBeatInterval" value="60"></property>
+	        <property name="socketTimeOut" value="60"></property>
+	        <property name="netChkList">
+	            <list>
+	            </list>
+	        </property>
+	    </bean>
+ 
+	<bean id="onSignalErrorJobListener" class="com.indigo.esb.signal.OnSignalErrorJobListener">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+	</bean>
+	<bean id="sch" class="com.indigo.esb.schedule.OldScheduleBean">
+		<property name="targetObject" ref="iService" />
+		<property name="threadCount" value="1" />
+		<property name="timeList">
+			<list>
+				<value>[startDelay=0, interval=10000 ,args=IF_001, concurrent=false,targetMethod=onSignal]</value>
+<!-- 				<value>[cronExpression=50 * * * * ?,args=IF_001,concurrent=false]</value> -->
+				
+			</list>
+		</property>
+	</bean>
+
+</beans>

@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding="euc-kr"?>
+<project name="agent-template-core_pj">
+
+	<description>
+		agent-template-core
+	</description>
+
+	<!--프로퍼티 -->
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="class.dir" value="${basedir}/bin" />
+	<property name="lib.dir" value="${basedir}/lib" />
+	<property name="data.dir" value="${basedir}/data" />
+	<property name="dest.dir" value="${basedir}/dest" />
+	<property name="config.dir" value="${basedir}/conf" />
+	<property name="doc.dir" value="${basedir}/docs/api" />
+	
+	<target name="jar agent-template-core-pj.1.1.0.jar">
+		<property name="adName" value="agent-template-core-pj.1.1.0.jar" />
+		<echo>${adName}</echo>
+		<delete file="${dest.dir}/${adName}" />
+		<jar update="false" compress="on" destfile="${dest.dir}/${adName}" basedir="${class.dir}">
+			<include name="com/**/*.class" />
+		</jar>
+	</target>
+	<!--클래스 패스 -->
+	<path id="compile.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+</project>

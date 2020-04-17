@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SND">
+
+	<select id="SELECT" parameterType="hashmap" resultType="hashmap">
+ 
+		SELECT
+		
+			<foreach item="colinfo" index="i" collection="COLINFO_LIST" separator=",">
+		         ${colinfo.COLUMN_NAME}
+		    </foreach>
+		
+		FROM ${TABLE_NAME}
+
+	</select>
+	
+	
+	<update id="SOURCE_UPDATE" parameterType="hashmap" >
+        UPDATE 
+        		${TABLE_NAME} SET
+        		 ESB_TRST_FG='P' 
+        		,ESB_TRST_ID=#{ESB_TRST_ID}
+        		,ESB_TRST_ILSI=#{ESB_TRST_ILSI} 
+        		
+        		WHERE
+        		<foreach item="colName" index="i" collection="PK_LIST" separator="AND">
+         			${colName} = #{${colName}}
+    			</foreach>
+	</update>
+	 
+	<update id="SOURCE_RESULT_UPDATE" parameterType="hashmap" >
+       UPDATE 
+        		${TABLE_NAME} SET
+        		
+        		ESB_TRST_FG=#{ESB_TRST_FG,jdbcType=VARCHAR} 
+        	   ,ESB_COMPLETE_ILSI=#{ESB_COMPLETE_ILSI1,jdbcType=VARCHAR}
+        		
+        		WHERE
+        		<foreach item="colName" index="i" collection="PK" separator="AND">
+         			${colName} = #{${colName}}
+    			</foreach>
+	</update>
+	
+	<insert id="INSERT" parameterType="hashmap" >
+		INSERT INTO ${TABLE_NAME} (
+		        <foreach item="colinfo" index="i" collection="COLINFO_LIST" separator=",">
+			         ${colinfo.COLUMN_NAME}
+			    </foreach>
+        		
+        		)VALUES(
+        		
+        		<foreach item="colinfo" index="i" collection="COLINFO_LIST" separator=",">
+			         #{${colinfo.COLUMN_NAME}}
+			    </foreach>
+        		)
+	
+	</insert>
+	
+	
+</mapper>
+
