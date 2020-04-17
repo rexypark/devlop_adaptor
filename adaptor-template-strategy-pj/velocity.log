@@ -1,0 +1,270 @@
+2018-11-22 14:28:13,660 - Log4JLogChute initialized using file 'velocity.log'
+2018-11-22 14:28:13,661 - Initializing Velocity, Calling init()...
+2018-11-22 14:28:13,661 - Starting Apache Velocity v1.7 (compiled: 2010-11-19 12:14:37)
+2018-11-22 14:28:13,661 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2018-11-22 14:28:13,661 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-11-22 14:28:13,661 - Target log system for org.apache.velocity.runtime.log.AvalonLogChute is not available (java.lang.NoClassDefFoundError: org/apache/log/format/Formatter).  Falling back to next log system...
+2018-11-22 14:28:13,661 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-11-22 14:28:13,662 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-11-22 14:28:13,665 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:28:13,666 - Do unicode file recognition:  false
+2018-11-22 14:28:13,666 - FileResourceLoader : adding path '.'
+2018-11-22 14:28:13,740 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2018-11-22 14:28:13,741 - Loaded System Directive: org.apache.velocity.runtime.directive.Stop
+2018-11-22 14:28:13,742 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2018-11-22 14:28:13,743 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2018-11-22 14:28:13,743 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2018-11-22 14:28:13,744 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-11-22 14:28:13,744 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-11-22 14:28:13,745 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-11-22 14:28:13,746 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-11-22 14:28:13,747 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-11-22 14:28:13,788 - Created '20' parsers.
+2018-11-22 14:28:13,793 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-11-22 14:28:13,793 - Velocimacro : Default library not found.
+2018-11-22 14:28:13,793 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-11-22 14:28:13,793 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-11-22 14:28:13,793 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-11-22 14:28:13,793 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-11-22 14:28:13,807 - Velocimacro : added VM allColumns: source=./templates/stdSourceSQL_NDFC.vm
+2018-11-22 14:28:13,807 - Velocimacro : added VM pkWhere: source=./templates/stdSourceSQL_NDFC.vm
+2018-11-22 14:28:13,807 - ResourceManager : found ./templates/stdSourceSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:28:13,849 - Velocimacro : VM addition rejected : allColumns : inline not allowed to replace existing VM
+2018-11-22 14:28:13,849 - Velocimacro : VM addition rejected : pkWhere : inline not allowed to replace existing VM
+2018-11-22 14:28:13,849 - ResourceManager : found ./templates/stdSourceSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:28:13,879 - Velocimacro : VM addition rejected : allColumns : inline not allowed to replace existing VM
+2018-11-22 14:28:13,879 - Velocimacro : VM addition rejected : pkWhere : inline not allowed to replace existing VM
+2018-11-22 14:28:13,879 - ResourceManager : found ./templates/stdSourceSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:28:17,453 - Log4JLogChute initialized using file 'velocity.log'
+2018-11-22 14:28:17,453 - Log4JLogChute initialized using file 'velocity.log'
+2018-11-22 14:28:17,453 - Initializing Velocity, Calling init()...
+2018-11-22 14:28:17,453 - Initializing Velocity, Calling init()...
+2018-11-22 14:28:17,453 - Starting Apache Velocity v1.7 (compiled: 2010-11-19 12:14:37)
+2018-11-22 14:28:17,453 - Starting Apache Velocity v1.7 (compiled: 2010-11-19 12:14:37)
+2018-11-22 14:28:17,453 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2018-11-22 14:28:17,453 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2018-11-22 14:28:17,453 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-11-22 14:28:17,453 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-11-22 14:28:17,453 - Target log system for org.apache.velocity.runtime.log.AvalonLogChute is not available (java.lang.NoClassDefFoundError: org/apache/log/format/Formatter).  Falling back to next log system...
+2018-11-22 14:28:17,453 - Target log system for org.apache.velocity.runtime.log.AvalonLogChute is not available (java.lang.NoClassDefFoundError: org/apache/log/format/Formatter).  Falling back to next log system...
+2018-11-22 14:28:17,453 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-11-22 14:28:17,453 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-11-22 14:28:17,453 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-11-22 14:28:17,453 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-11-22 14:28:17,453 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:28:17,453 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:28:17,453 - Do unicode file recognition:  false
+2018-11-22 14:28:17,453 - Do unicode file recognition:  false
+2018-11-22 14:28:17,453 - FileResourceLoader : adding path '.'
+2018-11-22 14:28:17,453 - FileResourceLoader : adding path '.'
+2018-11-22 14:28:17,453 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2018-11-22 14:28:17,453 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Stop
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Stop
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-11-22 14:28:17,454 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-11-22 14:28:17,455 - Created '20' parsers.
+2018-11-22 14:28:17,455 - Created '20' parsers.
+2018-11-22 14:28:17,455 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-11-22 14:28:17,455 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-11-22 14:28:17,456 - Velocimacro : Default library not found.
+2018-11-22 14:28:17,456 - Velocimacro : Default library not found.
+2018-11-22 14:28:17,456 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-11-22 14:28:17,456 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-11-22 14:28:17,456 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-11-22 14:28:17,456 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-11-22 14:28:17,456 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-11-22 14:28:17,456 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-11-22 14:28:17,456 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-11-22 14:28:17,456 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-11-22 14:28:17,464 - Velocimacro : added VM pkWhere: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:28:17,464 - Velocimacro : added VM pkWhere: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:28:17,465 - Velocimacro : added VM allColumns: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:28:17,465 - Velocimacro : added VM allColumns: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:28:17,465 - Velocimacro : added VM valuesColumns: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:28:17,465 - Velocimacro : added VM valuesColumns: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:28:17,465 - Velocimacro : added VM setColumns: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:28:17,465 - Velocimacro : added VM setColumns: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:28:17,465 - Velocimacro : added VM setEsbValue: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:28:17,465 - Velocimacro : added VM setEsbValue: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:28:17,465 - ResourceManager : found ./templates/stdTargetSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:28:17,465 - ResourceManager : found ./templates/stdTargetSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:28:17,470 - Null reference [template './templates/stdTargetSQL_NDFC.vm', line 22, column 58] : ${procedure} cannot be resolved.
+2018-11-22 14:28:17,470 - Null reference [template './templates/stdTargetSQL_NDFC.vm', line 22, column 58] : ${procedure} cannot be resolved.
+2018-11-22 14:28:17,486 - Velocimacro : VM addition rejected : pkWhere : inline not allowed to replace existing VM
+2018-11-22 14:28:17,486 - Velocimacro : VM addition rejected : pkWhere : inline not allowed to replace existing VM
+2018-11-22 14:28:17,486 - Velocimacro : VM addition rejected : allColumns : inline not allowed to replace existing VM
+2018-11-22 14:28:17,486 - Velocimacro : VM addition rejected : allColumns : inline not allowed to replace existing VM
+2018-11-22 14:28:17,486 - Velocimacro : VM addition rejected : valuesColumns : inline not allowed to replace existing VM
+2018-11-22 14:28:17,486 - Velocimacro : VM addition rejected : valuesColumns : inline not allowed to replace existing VM
+2018-11-22 14:28:17,487 - Velocimacro : VM addition rejected : setColumns : inline not allowed to replace existing VM
+2018-11-22 14:28:17,487 - Velocimacro : VM addition rejected : setColumns : inline not allowed to replace existing VM
+2018-11-22 14:28:17,487 - Velocimacro : VM addition rejected : setEsbValue : inline not allowed to replace existing VM
+2018-11-22 14:28:17,487 - Velocimacro : VM addition rejected : setEsbValue : inline not allowed to replace existing VM
+2018-11-22 14:28:17,487 - ResourceManager : found ./templates/stdTargetSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:28:17,487 - ResourceManager : found ./templates/stdTargetSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:28:17,489 - Null reference [template './templates/stdTargetSQL_NDFC.vm', line 22, column 58] : ${procedure} cannot be resolved.
+2018-11-22 14:28:17,489 - Null reference [template './templates/stdTargetSQL_NDFC.vm', line 22, column 58] : ${procedure} cannot be resolved.
+2018-11-22 14:28:17,504 - Velocimacro : VM addition rejected : pkWhere : inline not allowed to replace existing VM
+2018-11-22 14:28:17,504 - Velocimacro : VM addition rejected : pkWhere : inline not allowed to replace existing VM
+2018-11-22 14:28:17,504 - Velocimacro : VM addition rejected : allColumns : inline not allowed to replace existing VM
+2018-11-22 14:28:17,504 - Velocimacro : VM addition rejected : allColumns : inline not allowed to replace existing VM
+2018-11-22 14:28:17,504 - Velocimacro : VM addition rejected : valuesColumns : inline not allowed to replace existing VM
+2018-11-22 14:28:17,504 - Velocimacro : VM addition rejected : valuesColumns : inline not allowed to replace existing VM
+2018-11-22 14:28:17,505 - Velocimacro : VM addition rejected : setColumns : inline not allowed to replace existing VM
+2018-11-22 14:28:17,505 - Velocimacro : VM addition rejected : setColumns : inline not allowed to replace existing VM
+2018-11-22 14:28:17,505 - Velocimacro : VM addition rejected : setEsbValue : inline not allowed to replace existing VM
+2018-11-22 14:28:17,505 - Velocimacro : VM addition rejected : setEsbValue : inline not allowed to replace existing VM
+2018-11-22 14:28:17,505 - ResourceManager : found ./templates/stdTargetSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:28:17,505 - ResourceManager : found ./templates/stdTargetSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:28:17,506 - Null reference [template './templates/stdTargetSQL_NDFC.vm', line 22, column 58] : ${procedure} cannot be resolved.
+2018-11-22 14:28:17,506 - Null reference [template './templates/stdTargetSQL_NDFC.vm', line 22, column 58] : ${procedure} cannot be resolved.
+2018-11-22 14:41:33,543 - Log4JLogChute initialized using file 'velocity.log'
+2018-11-22 14:41:33,543 - Initializing Velocity, Calling init()...
+2018-11-22 14:41:33,543 - Starting Apache Velocity v1.7 (compiled: 2010-11-19 12:14:37)
+2018-11-22 14:41:33,543 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2018-11-22 14:41:33,543 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-11-22 14:41:33,543 - Target log system for org.apache.velocity.runtime.log.AvalonLogChute is not available (java.lang.NoClassDefFoundError: org/apache/log/format/Formatter).  Falling back to next log system...
+2018-11-22 14:41:33,544 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-11-22 14:41:33,544 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-11-22 14:41:33,546 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:41:33,547 - Do unicode file recognition:  false
+2018-11-22 14:41:33,547 - FileResourceLoader : adding path '.'
+2018-11-22 14:41:33,555 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2018-11-22 14:41:33,556 - Loaded System Directive: org.apache.velocity.runtime.directive.Stop
+2018-11-22 14:41:33,557 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2018-11-22 14:41:33,557 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2018-11-22 14:41:33,558 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2018-11-22 14:41:33,558 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-11-22 14:41:33,559 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-11-22 14:41:33,560 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-11-22 14:41:33,561 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-11-22 14:41:33,562 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-11-22 14:41:33,587 - Created '20' parsers.
+2018-11-22 14:41:33,592 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-11-22 14:41:33,592 - Velocimacro : Default library not found.
+2018-11-22 14:41:33,592 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-11-22 14:41:33,592 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-11-22 14:41:33,592 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-11-22 14:41:33,592 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-11-22 14:41:33,608 - Velocimacro : added VM allColumns: source=./templates/stdSourceSQL_NDFC.vm
+2018-11-22 14:41:33,608 - Velocimacro : added VM pkWhere: source=./templates/stdSourceSQL_NDFC.vm
+2018-11-22 14:41:33,608 - ResourceManager : found ./templates/stdSourceSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:41:33,642 - Velocimacro : VM addition rejected : allColumns : inline not allowed to replace existing VM
+2018-11-22 14:41:33,642 - Velocimacro : VM addition rejected : pkWhere : inline not allowed to replace existing VM
+2018-11-22 14:41:33,642 - ResourceManager : found ./templates/stdSourceSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:41:33,670 - Velocimacro : VM addition rejected : allColumns : inline not allowed to replace existing VM
+2018-11-22 14:41:33,670 - Velocimacro : VM addition rejected : pkWhere : inline not allowed to replace existing VM
+2018-11-22 14:41:33,670 - ResourceManager : found ./templates/stdSourceSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:41:37,069 - Log4JLogChute initialized using file 'velocity.log'
+2018-11-22 14:41:37,069 - Log4JLogChute initialized using file 'velocity.log'
+2018-11-22 14:41:37,069 - Initializing Velocity, Calling init()...
+2018-11-22 14:41:37,069 - Initializing Velocity, Calling init()...
+2018-11-22 14:41:37,069 - Starting Apache Velocity v1.7 (compiled: 2010-11-19 12:14:37)
+2018-11-22 14:41:37,069 - Starting Apache Velocity v1.7 (compiled: 2010-11-19 12:14:37)
+2018-11-22 14:41:37,069 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2018-11-22 14:41:37,069 - Default Properties File: org\apache\velocity\runtime\defaults\velocity.properties
+2018-11-22 14:41:37,069 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-11-22 14:41:37,069 - Trying to use logger class org.apache.velocity.runtime.log.AvalonLogChute
+2018-11-22 14:41:37,069 - Target log system for org.apache.velocity.runtime.log.AvalonLogChute is not available (java.lang.NoClassDefFoundError: org/apache/log/format/Formatter).  Falling back to next log system...
+2018-11-22 14:41:37,069 - Target log system for org.apache.velocity.runtime.log.AvalonLogChute is not available (java.lang.NoClassDefFoundError: org/apache/log/format/Formatter).  Falling back to next log system...
+2018-11-22 14:41:37,069 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-11-22 14:41:37,069 - Trying to use logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-11-22 14:41:37,069 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-11-22 14:41:37,069 - Using logger class org.apache.velocity.runtime.log.Log4JLogChute
+2018-11-22 14:41:37,070 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:41:37,070 - ResourceLoader instantiated: org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:41:37,070 - Do unicode file recognition:  false
+2018-11-22 14:41:37,070 - Do unicode file recognition:  false
+2018-11-22 14:41:37,070 - FileResourceLoader : adding path '.'
+2018-11-22 14:41:37,070 - FileResourceLoader : adding path '.'
+2018-11-22 14:41:37,070 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2018-11-22 14:41:37,070 - ResourceCache: initialized (class org.apache.velocity.runtime.resource.ResourceCacheImpl) with class java.util.Collections$SynchronizedMap cache map.
+2018-11-22 14:41:37,070 - Loaded System Directive: org.apache.velocity.runtime.directive.Stop
+2018-11-22 14:41:37,070 - Loaded System Directive: org.apache.velocity.runtime.directive.Stop
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Define
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Break
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Evaluate
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Literal
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Macro
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Parse
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Include
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-11-22 14:41:37,071 - Loaded System Directive: org.apache.velocity.runtime.directive.Foreach
+2018-11-22 14:41:37,072 - Created '20' parsers.
+2018-11-22 14:41:37,072 - Created '20' parsers.
+2018-11-22 14:41:37,072 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-11-22 14:41:37,072 - Velocimacro : "velocimacro.library" is not set.  Trying default library: VM_global_library.vm
+2018-11-22 14:41:37,072 - Velocimacro : Default library not found.
+2018-11-22 14:41:37,072 - Velocimacro : Default library not found.
+2018-11-22 14:41:37,072 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-11-22 14:41:37,072 - Velocimacro : allowInline = true : VMs can be defined inline in templates
+2018-11-22 14:41:37,072 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-11-22 14:41:37,072 - Velocimacro : allowInlineToOverride = false : VMs defined inline may NOT replace previous VM definitions
+2018-11-22 14:41:37,072 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-11-22 14:41:37,072 - Velocimacro : allowInlineLocal = false : VMs defined inline will be global in scope if allowed.
+2018-11-22 14:41:37,072 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-11-22 14:41:37,072 - Velocimacro : autoload off : VM system will not automatically reload global library macros
+2018-11-22 14:41:37,082 - Velocimacro : added VM pkWhere: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:41:37,082 - Velocimacro : added VM pkWhere: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:41:37,082 - Velocimacro : added VM allColumns: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:41:37,082 - Velocimacro : added VM allColumns: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:41:37,082 - Velocimacro : added VM valuesColumns: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:41:37,082 - Velocimacro : added VM valuesColumns: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:41:37,083 - Velocimacro : added VM setColumns: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:41:37,083 - Velocimacro : added VM setColumns: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:41:37,083 - Velocimacro : added VM setEsbValue: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:41:37,083 - Velocimacro : added VM setEsbValue: source=./templates/stdTargetSQL_NDFC.vm
+2018-11-22 14:41:37,083 - ResourceManager : found ./templates/stdTargetSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:41:37,083 - ResourceManager : found ./templates/stdTargetSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:41:37,087 - Null reference [template './templates/stdTargetSQL_NDFC.vm', line 22, column 58] : ${procedure} cannot be resolved.
+2018-11-22 14:41:37,087 - Null reference [template './templates/stdTargetSQL_NDFC.vm', line 22, column 58] : ${procedure} cannot be resolved.
+2018-11-22 14:41:37,098 - Velocimacro : VM addition rejected : pkWhere : inline not allowed to replace existing VM
+2018-11-22 14:41:37,098 - Velocimacro : VM addition rejected : pkWhere : inline not allowed to replace existing VM
+2018-11-22 14:41:37,098 - Velocimacro : VM addition rejected : allColumns : inline not allowed to replace existing VM
+2018-11-22 14:41:37,098 - Velocimacro : VM addition rejected : allColumns : inline not allowed to replace existing VM
+2018-11-22 14:41:37,099 - Velocimacro : VM addition rejected : valuesColumns : inline not allowed to replace existing VM
+2018-11-22 14:41:37,099 - Velocimacro : VM addition rejected : valuesColumns : inline not allowed to replace existing VM
+2018-11-22 14:41:37,099 - Velocimacro : VM addition rejected : setColumns : inline not allowed to replace existing VM
+2018-11-22 14:41:37,099 - Velocimacro : VM addition rejected : setColumns : inline not allowed to replace existing VM
+2018-11-22 14:41:37,099 - Velocimacro : VM addition rejected : setEsbValue : inline not allowed to replace existing VM
+2018-11-22 14:41:37,099 - Velocimacro : VM addition rejected : setEsbValue : inline not allowed to replace existing VM
+2018-11-22 14:41:37,099 - ResourceManager : found ./templates/stdTargetSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:41:37,099 - ResourceManager : found ./templates/stdTargetSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:41:37,101 - Null reference [template './templates/stdTargetSQL_NDFC.vm', line 22, column 58] : ${procedure} cannot be resolved.
+2018-11-22 14:41:37,101 - Null reference [template './templates/stdTargetSQL_NDFC.vm', line 22, column 58] : ${procedure} cannot be resolved.
+2018-11-22 14:41:37,114 - Velocimacro : VM addition rejected : pkWhere : inline not allowed to replace existing VM
+2018-11-22 14:41:37,114 - Velocimacro : VM addition rejected : pkWhere : inline not allowed to replace existing VM
+2018-11-22 14:41:37,114 - Velocimacro : VM addition rejected : allColumns : inline not allowed to replace existing VM
+2018-11-22 14:41:37,114 - Velocimacro : VM addition rejected : allColumns : inline not allowed to replace existing VM
+2018-11-22 14:41:37,115 - Velocimacro : VM addition rejected : valuesColumns : inline not allowed to replace existing VM
+2018-11-22 14:41:37,115 - Velocimacro : VM addition rejected : valuesColumns : inline not allowed to replace existing VM
+2018-11-22 14:41:37,115 - Velocimacro : VM addition rejected : setColumns : inline not allowed to replace existing VM
+2018-11-22 14:41:37,115 - Velocimacro : VM addition rejected : setColumns : inline not allowed to replace existing VM
+2018-11-22 14:41:37,115 - Velocimacro : VM addition rejected : setEsbValue : inline not allowed to replace existing VM
+2018-11-22 14:41:37,115 - Velocimacro : VM addition rejected : setEsbValue : inline not allowed to replace existing VM
+2018-11-22 14:41:37,115 - ResourceManager : found ./templates/stdTargetSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:41:37,115 - ResourceManager : found ./templates/stdTargetSQL_NDFC.vm with loader org.apache.velocity.runtime.resource.loader.FileResourceLoader
+2018-11-22 14:41:37,119 - Null reference [template './templates/stdTargetSQL_NDFC.vm', line 22, column 58] : ${procedure} cannot be resolved.
+2018-11-22 14:41:37,119 - Null reference [template './templates/stdTargetSQL_NDFC.vm', line 22, column 58] : ${procedure} cannot be resolved.

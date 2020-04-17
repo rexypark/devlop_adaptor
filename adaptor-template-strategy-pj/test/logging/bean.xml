@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="csvAppender" class="com.indigo.esb.uav.log.DailyLoggingAppender" init-method="start">
+		<property name="datePattern" value="yyyyMMdd" />
+		<property name="fileName" value="c:/testlog/testlog"  />
+		<property name="filenameExt" value="csv" />
+		<property name="header" value="------------Header------" />
+	</bean>
+</beans>

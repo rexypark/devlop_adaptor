@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <import resource="adaptor_template.xml"/>
+    
+    <bean class="com.indigo.esb.schedule.OldScheduleBean" id="adaptorTemplateSchedule">
+        <description>adaptorTemplateSchedule</description>
+        <property name="targetObject" ref="iservice"/>
+        <property name="threadCount" value="1"/>
+        <property name="timeList">
+            <list>
+                <value>[startDelay=0,interval=100000000,args=BMT_SRC_TGT_001,concurrent=false]</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close" id="datasource">
+        <description><![CDATA[]]></description>
+        <property name="url" value="jdbc:oracle:thin:@10.1.1.28:1521:orcl"/>
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="username" value="bmt"/>
+        <property name="password" value="bmt"/>
+        <property name="defaultAutoCommit" value="FALSE"/>
+        <property name="maxActive" value="40"></property>
+    </bean>
+    
+    <bean autowire="default"
+        class="com.indigo.esb.std.IndigoCustomAdaptor"
+        dependency-check="default" id="iservice" lazy-init="default">
+        <description><![CDATA[]]></description>
+        <property name="interfaceList" ref="interfaceList">
+            <description><![CDATA[]]></description>
+        </property>
+        <property name="onSignalPatternMap" ref="onSignalPatternMap">
+            <description><![CDATA[]]></description>
+        </property>
+        <property name="onMessagePatternMap" ref="onMessagePatternMap">
+            <description><![CDATA[]]></description>
+        </property>
+        <property name="direction" value="source" />
+    </bean>
+    
+</beans>

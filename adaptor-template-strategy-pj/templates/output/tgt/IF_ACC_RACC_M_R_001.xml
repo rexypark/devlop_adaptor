@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="IF_ACC_RACC_M_R_001">
+	
+	<update id="INSERT" parameterType="map" >
+		MERGE INTO 
+			TB_ESB01 
+		USING DUAL ON ( 
+			OFC_CON_SEQ =  #{OFC_CON_SEQ,jdbcType=SMALLINT} 
+		) WHEN MATCHED THEN
+		UPDATE SET 
+			OFC_SEQ = #{OFC_SEQ,jdbcType=SMALLINT} ,
+			REGION_SEQ = #{REGION_SEQ,jdbcType=SMALLINT} ,
+			REGION_NAME = #{REGION_NAME,jdbcType=VARCHAR} ,
+			OFC_CLS_CD = #{OFC_CLS_CD,jdbcType=VARCHAR} ,
+			OFC_NAME = #{OFC_NAME,jdbcType=VARCHAR} ,
+			OFC_BASE_ADDR = #{OFC_BASE_ADDR,jdbcType=VARCHAR} ,
+			OFC_TELNO = #{OFC_TELNO,jdbcType=VARCHAR} ,
+			ESB_TX_ID = #{ESB_TX_ID,jdbcType=VARCHAR} ,
+			ESB_STATE_CD ='S' ,
+			ESB_TIME = #{ESB_TIME , jdbcType=VARCHAR}	,
+			ESB_CUD = #{ESB_CUD,jdbcType=CHAR} ,
+			DPS_TRANS_YN = #{DPS_TRANS_YN,jdbcType=CHAR} ,
+			DPS_TRANS_TIME = #{DPS_TRANS_TIME,jdbcType=VARCHAR}  
+		WHEN NOT MATCHED THEN
+		INSERT (
+			OFC_CON_SEQ ,
+			OFC_SEQ ,
+			REGION_SEQ ,
+			REGION_NAME ,
+			OFC_CLS_CD ,
+			OFC_NAME ,
+			OFC_BASE_ADDR ,
+			OFC_TELNO ,
+			ESB_TX_ID ,
+			ESB_STATE_CD ,
+			ESB_TIME ,
+			ESB_CUD ,
+			DPS_TRANS_YN ,
+			DPS_TRANS_TIME 
+		)
+		VALUES (
+			#{OFC_CON_SEQ,jdbcType=SMALLINT} ,
+			#{OFC_SEQ,jdbcType=SMALLINT} ,
+			#{REGION_SEQ,jdbcType=SMALLINT} ,
+			#{REGION_NAME,jdbcType=VARCHAR} ,
+			#{OFC_CLS_CD,jdbcType=VARCHAR} ,
+			#{OFC_NAME,jdbcType=VARCHAR} ,
+			#{OFC_BASE_ADDR,jdbcType=VARCHAR} ,
+			#{OFC_TELNO,jdbcType=VARCHAR} ,
+			#{ESB_TX_ID,jdbcType=VARCHAR} ,
+			'S' ,
+			#{ESB_TIME , jdbcType=VARCHAR} ,
+			#{ESB_CUD,jdbcType=CHAR} ,
+			#{DPS_TRANS_YN,jdbcType=CHAR} ,
+			#{DPS_TRANS_TIME,jdbcType=VARCHAR} 
+		)
+	</update>
+	
+	<insert id="INSERT_ONLY" parameterType="map" >
+		INSERT INTO TB_ESB01 (
+			OFC_CON_SEQ ,
+			OFC_SEQ ,
+			REGION_SEQ ,
+			REGION_NAME ,
+			OFC_CLS_CD ,
+			OFC_NAME ,
+			OFC_BASE_ADDR ,
+			OFC_TELNO ,
+			ESB_TX_ID ,
+			ESB_STATE_CD ,
+			ESB_TIME ,
+			ESB_CUD ,
+			DPS_TRANS_YN ,
+			DPS_TRANS_TIME 
+         )
+        VALUES (
+			#{OFC_CON_SEQ,jdbcType=SMALLINT} ,
+			#{OFC_SEQ,jdbcType=SMALLINT} ,
+			#{REGION_SEQ,jdbcType=SMALLINT} ,
+			#{REGION_NAME,jdbcType=VARCHAR} ,
+			#{OFC_CLS_CD,jdbcType=VARCHAR} ,
+			#{OFC_NAME,jdbcType=VARCHAR} ,
+			#{OFC_BASE_ADDR,jdbcType=VARCHAR} ,
+			#{OFC_TELNO,jdbcType=VARCHAR} ,
+			#{ESB_TX_ID,jdbcType=VARCHAR} ,
+			'S' ,
+			#{ESB_TIME , jdbcType=VARCHAR} ,
+			#{ESB_CUD,jdbcType=CHAR} ,
+			#{DPS_TRANS_YN,jdbcType=CHAR} ,
+			#{DPS_TRANS_TIME,jdbcType=VARCHAR} 
+        )
+	</insert>
+</mapper>
+
+
+
+
+
+
+ 

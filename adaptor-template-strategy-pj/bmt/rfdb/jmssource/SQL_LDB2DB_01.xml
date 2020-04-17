@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="LDB2DB_01">
+
+	<!-- Numbering Key Based Table -->
+	<select id="SELECT" parameterType="string" resultType="hashmap">
+        SELECT i.rn, t.* 
+              FROM (SELECT i.*
+                      FROM (SELECT i.*, ROWNUM AS rn 
+                              FROM (
+                                    SELECT ROWID AS a_rowid
+                                      FROM TB_RDN_MTCH t
+                                   ) i
+                             WHERE ROWNUM <![CDATA[ <= ]]>  #{END_NUM}
+                           ) i
+                     WHERE rn <![CDATA[ >= ]]>  #{START_NUM}
+                   ) i
+                 , TB_RDN_MTCH t
+             WHERE i.a_rowid = t.ROWID
+         ORDER BY rn		
+	</select>
+	
+	
+</mapper>
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			

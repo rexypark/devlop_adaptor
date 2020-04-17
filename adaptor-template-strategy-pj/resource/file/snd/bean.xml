@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <!-- <bean class="com.mb.indigo2.springsupport.AdaptorConfigBean" id="adaptorBean">
+        <property name="adaptorName" value="AD_NCPMS_SND_005"/>
+        <property name="port" value="27005"/>
+        <property name="heartBeatInterval" value="60"/>
+        <property name="socketTimeOut" value="60"/>
+        <property name="heartbeatMsgType" value="xml"/>
+        <property name="netChkList">
+            <list/>
+        </property>
+    </bean> -->
+    <bean class="org.springframework.jms.core.JmsTemplate" id="jmsTemplate">
+        <description/>
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="deliveryMode" value="2"/>
+        <property name="priority" value="4"/>
+        <property name="timeToLive" value="-1"/>
+        <property name="pubSubDomain" value="false"/>
+        <property name="explicitQosEnabled" value="true"/>
+        <property name="sessionTransacted" value="true"/>
+    </bean>
+    <bean class="com.indigo.indigomq.pool.PooledConnectionFactory"
+        destroy-method="stop" id="jmsConnectionFactory">
+        <description/>
+        <property name="connectionFactory">
+            <bean class="com.indigo.indigomq.IndigoMQConnectionFactory">
+                <property name="brokerURL">
+                    <value><![CDATA[failover:(tcp://clupine.ipost.kr:24211,tcp://clupine.ipost.kr:24211)?initialReconnectDelay=5000&maxReconnectDelay=5000&randomize=false]]></value>
+                </property>
+            </bean>
+        </property>
+        <property name="maxConnections" value="-1"/>
+        <property name="idleTimeout" value="30000"/>
+        <property name="maximumActive" value="500"/>
+    </bean>
+    <bean class="com.indigo.esb.std.IndigoCustomAdaptor" id="iService">
+        <property name="interfaceList" ref="interfaceList"/>
+        <property name="onSignalPatternMap" ref="onSignalPatternMap"/>
+        <property name="onMessagePatternMap" ref="onMessagePatternMap"/>
+        <property name="direction" value="source"/>
+    </bean>
+    <import resource="adaptor_template.xml"/>
+    <bean
+        class="org.springframework.jms.listener.DefaultMessageListenerContainer" id="adaptorTemplateMessageListenerContainer">
+        <description>AdaptorTemplateMessageListenerContainer</description>
+        <property name="concurrentConsumers" value="10"/>
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destinationName" value="REPL.FILE.001"/>
+        <property name="messageListener" ref="iService"/>
+        <property name="messageSelector" value="if_id='IF_FILE_TUTO_001'"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="receiveTimeout" value="5000"/>
+        <property name="pubSubDomain" value="false"/>
+    </bean>
+  
+    <bean class="com.indigo.esb.schedule.OldScheduleBean" id="adaptorTemplateSchedule">
+        <description><![CDATA[adaptorTemplateSchedule]]></description>
+        <property name="targetObject" ref="iService"/>
+        <property name="threadCount" value="1"/>
+        <property name="timeList">
+            <list>
+            	<value>[cronExpression=0/10 * * * * ?,args=IF_FILE_TUTO_001,concurrent=false]</value>
+            </list>
+        </property>
+    </bean>
+  
+</beans>

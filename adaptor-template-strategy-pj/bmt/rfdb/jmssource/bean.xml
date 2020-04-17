@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="euc-kr"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+<!--     <bean class="com.mb.indigo2.springsupport.AdaptorConfigBean" id="adaptorBean"> -->
+<!--         <property name="adaptorName" value="TEMP_LDB2DB_SND"/> -->
+<!--         <property name="port" value="12600"/> -->
+<!--         <property name="heartBeatInterval" value="60"/> -->
+<!--         <property name="socketTimeOut" value="60"/> -->
+<!--         <property name="heartbeatMsgType" value="xml"/> -->
+<!--         <property name="netChkList"> -->
+<!--             <list/> -->
+<!--         </property> -->
+<!--     </bean> -->
+   <bean class="org.springframework.jms.core.JmsTemplate" id="jmsTemplate">
+        <description/>
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="deliveryMode" value="2"/>
+        <property name="priority" value="4"/>
+        <property name="timeToLive" value="-1"/>
+        <property name="pubSubDomain" value="false"/>
+        <property name="explicitQosEnabled" value="true"/>
+        <property name="sessionTransacted" value="true"/>
+    </bean>
+    <bean class="com.indigo.indigomq.pool.PooledConnectionFactory"
+        destroy-method="stop" id="jmsConnectionFactory">
+        <description/>
+        <property name="connectionFactory">
+            <bean class="com.indigo.indigomq.IndigoMQConnectionFactory">
+                <property name="brokerURL">
+                    <value><![CDATA[failover:(tcp://175.209.106.77:34211,tcp://175.209.106.77:34211)?initialReconnectDelay=5000&maxReconnectDelay=5000&randomize=false]]></value>
+                </property>
+            </bean>
+        </property>
+        <property name="maxConnections" value="20"/>
+        <property name="idleTimeout" value="30000"/>
+        <property name="maximumActive" value="500"/>
+    </bean>
+    <bean
+        class="org.springframework.jms.listener.DefaultMessageListenerContainer" id="AdaptorTemplateMessageListenerContainer">
+        <description>AdaptorTemplateMessageListenerContainer</description>
+        <property name="concurrentConsumers" value="2"/>
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destinationName" value="REPL.DD.OTO"/>
+        <property name="messageListener" ref="iservice"/>
+        <property name="messageSelector" value="if_id='LDB2DB_01'"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="pubSubDomain" value="false"/>
+    </bean>
+    <import resource="adaptor_template.xml"/>
+    <bean class="com.indigo.esb.schedule.OldScheduleBean" id="adaptorTemplateSchedule">
+        <description>adaptorTemplateSchedule</description>
+        <property name="targetObject" ref="iservice"/>
+        <property name="threadCount" value="1"/>
+        <property name="timeList">
+            <list>
+                <value>[startDelay=0,interval=900000000,args=LDB2DB_01,concurrent=false]</value>
+            </list>
+        </property>
+    </bean>
+    <bean class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close" id="datasource">
+        <description><![CDATA[]]></description>
+        <property name="url" value="jdbc:oracle:thin:@175.209.106.82:1521:kamco"/>
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="username" value="ext"/>
+        <property name="password" value="ext1234"/>
+        <property name="defaultAutoCommit" value="FALSE"/>
+        <property name="maxActive" value="10"/>
+    </bean>
+    <bean autowire="default"
+        class="com.indigo.esb.std.IndigoCustomAdaptor"
+        dependency-check="default" id="iservice" lazy-init="default">
+        <description><![CDATA[]]></description>
+        <property name="interfaceList" ref="interfaceList">
+            <description><![CDATA[]]></description>
+        </property>
+        <property name="onSignalPatternMap" ref="onSignalPatternMap">
+            <description><![CDATA[]]></description>
+        </property>
+        <property name="onMessagePatternMap" ref="onMessagePatternMap">
+            <description><![CDATA[]]></description>
+        </property>
+        <property name="direction" value="source"/>
+    </bean>
+</beans>

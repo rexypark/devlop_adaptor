@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <import resource="adaptor_template.xml"/>
+     <bean class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close" id="datasource">
+        <description><![CDATA[]]></description>
+ 		<property name="url" value="jdbc:oracle:thin:@10.1.3.207:1521:orcl"/>
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="username" value="indigo"/>
+        <property name="password" value="indigo"/>
+        <property name="maxActive" value="30" />
+        <property name="defaultAutoCommit" value="FALSE"/>
+    </bean>
+</beans>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean class="org.springframework.jms.core.JmsTemplate" id="jmsTemplate">
+        <description/>
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="deliveryMode" value="2"/>
+        <property name="priority" value="4"/>
+        <property name="timeToLive" value="-1"/>
+        <property name="pubSubDomain" value="false"/>
+        <property name="explicitQosEnabled" value="true"/>
+        <property name="sessionTransacted" value="true"/>
+    </bean>
+    <bean class="com.indigo.indigomq.pool.PooledConnectionFactory"
+        destroy-method="stop" id="jmsConnectionFactory">
+        <description/>
+        <property name="connectionFactory">
+            <bean class="com.indigo.indigomq.IndigoMQConnectionFactory">
+                <property name="brokerURL">
+                    <value>failover:(tcp://10.20.12.22:24211,tcp://10.20.12.22:24211)?initialReconnectDelay=5000&amp;maxReconnectDelay=5000&amp;randomize=false</value>
+                </property>
+            </bean>
+        </property>
+        <property name="maxConnections" value="2"/>
+        <property name="idleTimeout" value="30000"/>
+        <property name="maximumActive" value="500"/>
+    </bean>
+    <bean class="com.indigo.esb.std.IndigoCustomAdaptor" id="iService">
+        <property name="interfaceList" ref="interfaceList"/>
+        <property name="onSignalPatternMap" ref="onSignalPatternMap"/>
+        <property name="onMessagePatternMap" ref="onMessagePatternMap"/>
+        <property name="direction" value="source"/>
+    </bean>
+    <import resource="adaptor_template.xml"/>
+    <bean
+        class="org.springframework.jms.listener.DefaultMessageListenerContainer" id="adaptorTemplateMessageListenerContainer">
+        <description>AdaptorTemplateMessageListenerContainer</description>
+        <property name="concurrentConsumers" value="4"/>
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destinationName" value="REPL.IMEIIM"/>
+        <property name="messageListener" ref="iService"/>
+        <property name="messageSelector" value="if_id in ('BAF0010','BAF0020','BAF0030','BAF0040','BAF0050')"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="receiveTimeout" value="5000"/>
+        <property name="pubSubDomain" value="false"/>
+    </bean>
+    <bean class="com.mb.indigo2.springsupport.AdaptorConfigBean" id="adaptorBean">
+        <description>&lt;![CDATA[]]&gt;</description>
+        <property name="adaptorName" value="UAV_IME_IIM_S_001"/>
+        <property name="heartBeatInterval" value="60"/>
+        <property name="port" value="25000"/>
+        <property name="socketTimeOut" value="60"/>
+        <property name="netChkList">
+            <list/>
+        </property>
+    </bean>
+</beans>

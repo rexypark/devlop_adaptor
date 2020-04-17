@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:annotation-config />
+
+	<util:map id="onSignalPatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="FLATSND">
+			<util:list id="onSignalList">
+				<bean class="com.indigo.esb.std.file.snd.SimplePollingFileList" />
+				<bean class="com.indigo.esb.std.file.snd.SimpleJFlatConvertorDataToJMS">
+					<property name="encryption">
+						<bean class="com.indigo.esb.std.com.snd.EncryptionProcess">
+							<property name="cryptoType" value="JASYPT" />
+						</bean>
+					</property>
+				</bean>
+			</util:list>
+		</entry>
+	</util:map>
+
+	<util:map id="onMessagePatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="FLATRST">
+			<util:list id="onMessageList">
+				<bean class="com.indigo.esb.std.com.snd.DummyResultProcess" />
+			</util:list>
+		</entry>
+	</util:map>
+
+	<bean id="onSignalErrorJobListener" class="com.indigo.esb.signal.OnSignalErrorJobListener">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+	</bean>
+	<import resource="adaptor_configure.xml" />
+</beans>

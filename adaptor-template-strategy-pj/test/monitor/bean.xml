@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="euc-kr"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean class="com.mb.indigo2.springsupport.AdaptorConfigBean" id="adaptorBean">
+        <property name="adaptorName" value="IVS_MONITOR"/>
+        <property name="port" value="25005"/>
+        <property name="heartBeatInterval" value="60"/>
+        <property name="socketTimeOut" value="60"/>
+        <property name="heartbeatMsgType" value="xml"/>
+        <property name="netChkList">
+            <list/>
+        </property>
+    </bean>
+    <bean class="org.springframework.jms.core.JmsTemplate" id="jmsTemplate">
+        <description/>
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="deliveryMode" value="2"/>
+        <property name="priority" value="4"/>
+        <property name="pubSubDomain" value="false"/>
+        <property name="deliveryPersistent" value="false"/>
+        <property name="explicitQosEnabled" value="true"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="timeToLive" value="10000"/>
+    </bean>
+    <bean class="com.indigo.indigomq.pool.PooledConnectionFactory"
+        destroy-method="stop" id="jmsConnectionFactory">
+        <description/>
+        <property name="connectionFactory">
+            <bean class="com.indigo.indigomq.IndigoMQConnectionFactory">
+                <property name="brokerURL">
+                    <value>failover:(tcp://127.0.0.1:24211,tcp://127.0.0.1:24211)?initialReconnectDelay=5000&maxReconnectDelay=5000&randomize=false</value>
+                </property>
+            </bean>
+        </property>
+        <property name="maxConnections" value="4"/>
+        <property name="idleTimeout" value="30000"/>
+        <property name="maximumActive" value="500"/>
+    </bean>
+    <bean class="com.indigo.esb.schedule.OldScheduleBean" id="adaptorTemplateSchedule">
+        <description>adaptorTemplateSchedule</description>
+        <property name="targetObject" ref="iservice"/>
+        <property name="threadCount" value="1"/>
+        <property name="timeList">
+            <list>
+                <value>[cronExpression=0/2 * * * * ?,args=SERVER01,concurrent=false]</value>
+            </list>
+        </property>
+    </bean>
+    <bean class="com.indigo.esb.system.SystemMonitoring" id="iservice">
+        <property name="jmstemplate" ref="jmsTemplate"/>
+        <property name="netTester" ref="netTester" />
+    </bean>
+    
+    <bean class="com.indigo.esb.system.NetConnectTester" id="netTester" >
+    	<property name="ip" value="clupine.ipost.kr" />
+    	<property name="port" value="24211" />
+    </bean>
+    <bean class="java.lang.Thread" init-method="start">
+    	<constructor-arg ref="netTester" />
+    </bean>
+    
+    
+    
+</beans>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<context:annotation-config />
+
+	<util:map id="onSignalPatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="DBSND">
+			<util:list id="OnSignalList">
+				<bean class="com.indigo.esb.bmt.db.DBParallelPollingDataToJMS" />
+			</util:list>
+		</entry>
+	</util:map>
+
+	<util:map id="onMessagePatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="DBRST">
+			<util:list id="onMessageList">
+				<bean class="com.indigo.esb.std.com.snd.DummyResultProcess" />
+			</util:list>
+		</entry>
+	</util:map>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="dbcpNativeJdbcExtractor"	class="org.springframework.jdbc.support.nativejdbc.CommonsDbcpNativeJdbcExtractor" />
+		
+	<bean id="oracleLobhandler" class="org.springframework.jdbc.support.lob.OracleLobHandler"		lazy-init="true">
+		<property name="nativeJdbcExtractor">
+			<ref local="dbcpNativeJdbcExtractor" />
+		</property>
+	</bean>
+	
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="datasource" />
+	</bean>
+
+	<aop:config>
+		<aop:advisor
+			pointcut="execution(* com.indigo.esb.adaptor.strategy.OnSignalStrategy.onStart(..))"
+			advice-ref="txAdvice" />
+
+		<aop:advisor
+			pointcut="execution(* com.indigo.esb.adaptor.strategy.OnMessageStrategy.process(..))"
+			advice-ref="txAdvice" />
+	</aop:config>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+
+	<import resource="adaptor_configure.xml" />
+
+</beans>
+	          			

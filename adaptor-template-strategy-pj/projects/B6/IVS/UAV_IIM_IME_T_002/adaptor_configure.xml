@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="euc-kr"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+		
+	<util:list id="interfaceList">
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="AFB0010" />
+			<property name="onMessagePatternName" value="RECEIVE" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="sndSysId" value='IIM' />
+			<property name="rcvSysId" value='IME' />
+			<property name="fields">
+				<set>
+					<value>S1_ACPNO</value>
+					<value>S1_ACP_VER</value>
+					<value>S1_PRJTR_SRVNO</value>
+					<value>S1_PRJTR_RNKCD</value>
+					<value>S1_PRJTR_FULNM</value>
+					<value>S1_TITLE</value>
+					<value>S1_OPRTNS_NM</value>
+					<value>S1_EXPLN</value>
+					<value>S1_AIRSPC_NM</value>
+					<value>S1_AIRSPC_CD_SN</value>
+					<value>S1_AIRSPC_VER</value>
+					<value>S1_ASFRMCD</value>
+					<value>S1_MSNPFCD</value>
+					<value>S1_TRVLV</value>
+					<value>S1_HGHST_ALT</value>
+					<value>S1_WIDTH</value>
+					<value>S1_TNG3DRCD</value>
+					<value>S1_TRNCH_CENTR_COORD</value>
+					<value>S1_RADS</value>
+					<value>S1_START_AZ</value>
+					<value>S1_END_AZ</value>
+					<value>S1_WTHN_RADS</value>
+					<value>S1_EXCPT_RADS</value>
+					<value>S1_CNTRL_TIME_INTVL_CTNT</value>
+					<value>S1_TRACK_PTTRN_AIRSPC_CTNT</value>
+					<value>S1_CORDC</value>
+					<value>S1_ACP_RMRK</value>
+					<value>S1_ACMUCD</value>
+					<value>S1_COA_TYPE_EXPLN</value>
+				</set>
+			</property>
+		</bean>
+
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="AFB0020" />
+			<property name="onMessagePatternName" value="RECEIVE" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="sndSysId" value='IIM' />
+			<property name="rcvSysId" value='IME' />
+			<property name="fields">
+				<set>
+					<value>S1_ACPNO</value>
+					<value>S1_ACP_VER</value>
+					<value>S1_PRJTR_SRVNO</value>
+					<value>S1_PRJTR_RNKCD</value>
+					<value>S1_PRJTR_FULNM</value>
+					<value>S1_TITLE</value>
+					<value>S1_OPRTNS_NM</value>
+					<value>S1_EXPLN</value>
+					<value>S1_AIRSPC_NM</value>
+					<value>S1_AIRSPC_CD_SN</value>
+					<value>S1_AIRSPC_VER</value>
+					<value>S1_ASFRMCD</value>
+					<value>S1_MSNPFCD</value>
+					<value>S1_TRVLV</value>
+					<value>S1_HGHST_ALT</value>
+					<value>S1_WIDTH</value>
+					<value>S1_TNG3DRCD</value>
+					<value>S1_TRNCH_CENTR_COORD</value>
+					<value>S1_RADS</value>
+					<value>S1_START_AZ</value>
+					<value>S1_END_AZ</value>
+					<value>S1_WTHN_RADS</value>
+					<value>S1_EXCPT_RADS</value>
+					<value>S1_CNTRL_TIME_INTVL_CTNT</value>
+					<value>S1_TRACK_PTTRN_AIRSPC_CTNT</value>
+					<value>S1_CORDC</value>
+					<value>S1_ACP_RMRK</value>
+					<value>S1_ACMUCD</value>
+					<value>S1_COA_TYPE_EXPLN</value>
+				</set>
+			</property>
+		</bean>
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="AFB0030" />
+			<property name="onMessagePatternName" value="RECEIVE" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="sndSysId" value='IIM' />
+			<property name="rcvSysId" value='IME' />
+			<property name="fields">
+				<set>
+					<value>S1_NOTAM_IDNO</value>
+					<value>S1_EFCTN_DTTM</value>
+					<value>S1_INVLD_DTTM</value>
+					<value>S1_EFCTN_TMSLT_CTNT</value>
+					<value>S1_NOTAMDVCD</value>
+					<value>S1_TITLE</value>
+					<value>S1_NOTAM_DSTRBTN_DOC_ID</value>
+					<value>S1_UPRLMT_ALT</value>
+					<value>S1_LWLMT_ALT</value>
+					<value>S1_BDBK_CTNT</value>
+					<value>S1_HGHST_ALTBSDVCD</value>
+					<value>S1_LWST_ALTBSDVCD</value>
+				</set>
+			</property>
+		</bean>
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="AFB0040" />
+			<property name="onMessagePatternName" value="RECEIVE" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="sndSysId" value='IIM' />
+			<property name="rcvSysId" value='IME' />
+			<property name="fields">
+				<set>
+					<value>S1_IMGIDNO</value>
+					<value>S1_IMGTYCD</value>
+					<value>S1_IMAGCRTYCD</value>
+					<value>S1_SESN_IMAGE_YN</value>
+					<value>S1_CAM_IMAGE_YN</value>
+					<value>S1_LRA_YN</value>
+					<value>S1_IMAGE_BENO</value>
+					<value>S1_IMAGE_DMPINO</value>
+					<value>S1_IMAGE_HNGNM</value>
+					<value>S1_IMAGE_ENGNM</value>
+					<value>S1_IMAGE_GGPFT_COORD</value>
+					<value>S1_IMAGE_MGRS_COORD</value>
+					<value>S1_IMAGE_CLTN_DATE</value>
+					<value>S1_IMAGE_SHTNG_DRCTN</value>
+					<value>S1_WTPTDVCD</value>
+					<value>S1_IMAGE_CLSLVCD</value>
+					<value>S1_SERVICE_FLNM</value>
+					<value>S1_SERVICE_ORIGIN_FLNM</value>
+					<value>S1_SERVICE_FLSZ</value>
+					<value>S1_PRVW_FLNM</value>
+					<value>S1_PRVW_ORIGIN_FLNM</value>
+					<value>S1_PRVW_FLSZ</value>
+					<value>S1_ORGINL_FLNM</value>
+					<value>S1_ORGINL_ORIGIN_FLNM</value>
+					<value>S1_ORGINL_FLSZ</value>
+					<value>S1_RGST_DTTM</value>
+					<value>S1_FNL_RNWL_DTTM</value>
+					<value>S1_REGSTR_SRVNO</value>
+					<value>S1_FNL_RNWPS_SRVNO</value>
+					<value>S1_IMAGE_INFO_RMRK</value>
+				</set>
+			</property>
+		</bean>
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="AFB0050" />
+			<property name="onMessagePatternName" value="RECEIVE" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="sndSysId" value='IIM' />
+			<property name="rcvSysId" value='IME' />
+			<property name="fields">
+				<set>
+					<value>S1_IMAGCRTYCD</value>
+					<value>S1_MSNNO</value>
+					<value>S1_IMAGE_DCPHRRPRT_SEQ</value>
+					<value>S1_DSTRBTN_YN</value>
+					<value>S1_DN</value>
+					<value>S1_MSN_TTL</value>
+					<value>S1_MSN_START_DTTM</value>
+					<value>S1_MSN_FNSH_DTTM</value>
+					<value>S1_CLTN_SNSR_TYPE_NM</value>
+					<value>S1_DCPHRMT_PART_DCK_NM</value>
+					<value>S1_IMAGE_QLTY_EXPLN</value>
+					<value>S1_SHTNG_ANG</value>
+					<value>S1_MSN_ROUTE</value>
+					<value>S1_MSN_DTL_ROUTE_EXPLN</value>
+					<value>S1_MSN_TRVLV</value>
+					<value>S1_MSN_HGHST_ALT</value>
+					<value>S1_MSN_LWST_VLCT</value>
+					<value>S1_MSN_HGHST_VLCT</value>
+					<value>S1_RPRT_SMRY_HANGL_CTNT</value>
+					<value>S1_RPRT_SMRY_ENGLSH_CTNT</value>
+					<value>S1_RGST_DTTM</value>
+					<value>S1_FNL_RNWL_DTTM</value>
+					<value>S1_REGSTR_SRVNO</value>
+					<value>S1_FNL_RNWPS_SRVNO</value>
+				</set>
+			</property>
+		</bean>
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="AFB0060" />
+			<property name="onMessagePatternName" value="RECEIVE" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="sndSysId" value='IIM' />
+			<property name="rcvSysId" value='IME' />
+            <property name="receiveDir" value="E:\ESB_DATA\ESB_RECEIVE2" />
+			<property name="tmpDir"     value="E:\ESB_DATA\ESB_RECEIVE2\temp" />
+			<property name="copyDir"    value="Y:\IME_RECEIVE" />
+			<property name="fields">
+				<set>
+					<value>S1_IMGIDNO</value>
+					<value>S1_IMGTYCD</value>
+					<value>S1_IMAGCRTYCD</value>
+					<value>S1_MSNNO</value>
+					<value>S1_IMAGE_DCPHRRPRT_SEQ</value>
+					<value>S1_INDCTN_SVNC_TGT_BENO</value>
+					<value>S1_REFRC_RGST_YN</value>
+					<value>S1_RGST_DTTM</value>
+					<value>S1_FNL_RNWL_DTTM</value>
+					<value>S1_REGSTR_SRVNO</value>
+					<value>S1_FNL_RNWPS_SRVNO</value>
+				</set>
+			</property>
+		</bean>
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="AFB0070" />
+			<property name="onMessagePatternName" value="RECEIVE" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="sndSysId" value='IIM' />
+			<property name="rcvSysId" value='IME' />
+			<property name="fields">
+				<set>
+					<value>S1_IMAGCRTYCD</value>
+					<value>S1_MSNNO</value>
+					<value>S1_IMAGE_DCPHRRPRT_SEQ</value>
+					<value>S1_INDCTN_SVNC_TGT_BENO</value>
+					<value>S1_IDTF_SEQ</value>
+					<value>S1_OBTYPECD</value>
+					<value>S1_IDTF_DATE</value>
+					<value>S1_IDTF_DNT</value>
+					<value>S1_IDTF_CNTUNT</value>
+					<value>S1_VLDT_EXPLN</value>
+					<value>S1_HANGL_EQP_TTL</value>
+					<value>S1_ENGLSH_EQP_TTL</value>
+					<value>S1_ENMYFAMC</value>
+					<value>S1_IDTF_PLC_HANGL_TTL</value>
+					<value>S1_IDTF_PLC_ENGLSH_TTL</value>
+					<value>S1_IDTF_CTNT</value>
+					<value>S1_RGST_DTTM</value>
+					<value>S1_FNL_RNWL_DTTM</value>
+					<value>S1_REGSTR_SRVNO</value>
+					<value>S1_FNL_RNWPS_SRVNO</value>
+				</set>
+			</property>
+		</bean>
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="AFB0080" />
+			<property name="onMessagePatternName" value="RECEIVE" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="sndSysId" value='IIM' />
+			<property name="rcvSysId" value='IME' />
+			<property name="fields">
+				<set>
+					<value>S1_IMAGCRTYCD</value>
+					<value>S1_MSNNO</value>
+					<value>S1_IMAGE_DCPHRRPRT_SEQ</value>
+					<value>S1_INDCTN_SVNC_TGT_BENO</value>
+					<value>S1_ADDTN_TGT_YN</value>
+					<value>S1_MN_IDTF_YN</value>
+					<value>S1_IDTF_TGT_SEQ</value>
+					<value>S1_IDTF_TGTPT_NM</value>
+					<value>S1_ACTVT_STATE_TYPE_EXPLN</value>
+					<value>S1_ACTVT_CHG_TYPE_EXPLN</value>
+					<value>S1_ODNR_IDTF_CTNT</value>
+					<value>S1_HANGL_ACTVT_CTNT</value>
+					<value>S1_ENGLSH_ACTVT_CTNT</value>
+					<value>S1_ETDVSCD</value>
+					<value>S1_ENMY_CORPS_TYPE_EXPLN</value>
+					<value>S1_TGSTCD</value>
+					<value>S1_DTL_TGSTCD</value>
+					<value>S1_INSTLTN_HANGL_TTL</value>
+					<value>S1_INSTLTN_ENGLSH_TTL</value>
+					<value>S1_GGPFT_COORD</value>
+					<value>S1_MGRS_COORD</value>
+					<value>S1_FKSGNCD</value>
+					<value>S1_NCB</value>
+					<value>S1_RGST_DTTM</value>
+					<value>S1_FNL_RNWL_DTTM</value>
+					<value>S1_REGSTR_SRVNO</value>
+					<value>S1_FNL_RNWPS_SRVNO</value>
+				</set>
+			</property>
+		</bean>
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="AFB0090" />
+			<property name="onMessagePatternName" value="RECEIVE" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="sndSysId" value='IIM' />
+			<property name="rcvSysId" value='IME' />
+            <property name="receiveDir" value="E:\ESB_DATA\ESB_RECEIVE2" />
+			<property name="tmpDir"     value="E:\ESB_DATA\ESB_RECEIVE2\temp" />
+			<property name="copyDir"    value="Y:\IME_RECEIVE" />
+			<property name="fields">
+				<set>
+					<value>S1_IMAGCRTYCD</value>
+					<value>S1_MSNNO</value>
+					<value>S1_IMAGE_DCPHRRPRT_SEQ</value>
+					<value>S1_INDCTN_SVNC_TGT_BENO</value>
+					<value>S1_DTA_SEQ</value>
+					<value>S1_IMAGE_IDTF_DATE</value>
+					<value>S1_PRDCN_CD_TYPENO</value>
+					<value>S1_IMAGE_MSNNO</value>
+					<value>S1_IMGTYCD</value>
+					<value>S1_SNSR_LOCTN</value>
+					<value>S1_SRC_IMGIDNO</value>
+					<value>S1_IMAGE_IDTF_DNT</value>
+					<value>S1_COVR_SCOPE_DVS_NM</value>
+					<value>S1_IMAGE_RDSCD</value>
+					<value>S1_MN_WTHR_SITATN_EXPLN</value>
+					<value>S1_ETC_WTHR_SITATN_EXPLN</value>
+					<value>S1_COVR_ANG</value>
+					<value>S1_COVR_SCOPE_PCTG</value>
+					<value>S1_RGST_DTTM</value>
+					<value>S1_FNL_RNWL_DTTM</value>
+					<value>S1_REGSTR_SRVNO</value>
+					<value>S1_FNL_RNWPS_SRVNO</value>
+				</set>
+			</property>
+		</bean>
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="AFB0100" />
+			<property name="onMessagePatternName" value="RECEIVE" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="sndSysId" value='IIM' />
+			<property name="rcvSysId" value='IME' />
+			<property name="fields">
+				<set>
+					<value>S1_BENO</value>
+					<value>S1_SUFNO</value>
+					<value>S1_INSTLTN_DVS_NM</value>
+					<value>S1_RPST_TGT_YN</value>
+					<value>S1_INSTLTN_HANGL_TTL</value>
+					<value>S1_INSTLTN_ENGLSH_TTL</value>
+					<value>S1_FKSGNCD</value>
+					<value>S1_TGSTCD</value>
+					<value>S1_DTL_TGSTCD</value>
+					<value>S1_GGPFT_COORD</value>
+					<value>S1_MGRS_COORD</value>
+					<value>S1_KILLBOX_INFO_IDNO</value>
+					<value>S1_IMPRTC_SIGN_ID</value>
+					<value>S1_FOPSGN_ID</value>
+					<value>S1_REL_LOC_ID</value>
+					<value>S1_FASGN_ID</value>
+					<value>S1_MILAFR_SCTRNO</value>
+					<value>S1_AIRDF_SCTRNO</value>
+					<value>S1_REL_DATASGN_ID</value>
+					<value>S1_MAIN_REFMAPNO</value>
+					<value>S1_ASSTC_REFMAPNO</value>
+					<value>S1_JOP_MAPSR_SN</value>
+					<value>S1_ARTGT_MAPSR_SN</value>
+					<value>S1_INSTLTN_ABLT_IDXNUM</value>
+					<value>S1_INSTLTN_GRVT</value>
+					<value>S1_INSTLTN_WIDTH</value>
+					<value>S1_INSTLTN_DRCTN</value>
+					<value>S1_INSTLTN_LEN</value>
+					<value>S1_INSTLTN_ALTTD</value>
+					<value>S1_MSN_UC</value>
+					<value>S1_FCNCD</value>
+					<value>S1_SNSTGTDVCD</value>
+					<value>S1_RGST_DTTM</value>
+					<value>S1_FNL_RNWL_DTTM</value>
+					<value>S1_REGSTR_SRVNO</value>
+					<value>S1_FNL_RNWPS_SRVNO</value>
+				</set>
+			</property>
+		</bean>
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="AFB0110" />
+			<property name="onMessagePatternName" value="RECEIVE" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="sndSysId" value='IIM' />
+			<property name="rcvSysId" value='IME' />
+			<property name="fields">
+				<set>
+					<value>S1_BENO</value>
+					<value>S1_FNCTNL_STATE_EXPLN</value>
+					<value>S1_PYSCL_STATE_EXPLN</value>
+					<value>S1_TGT_STATE_EXPLN</value>
+					<value>S1_BDA_RFLTDT</value>
+					<value>S1_RGST_DTTM</value>
+					<value>S1_FNL_RNWL_DTTM</value>
+					<value>S1_REGSTR_SRVNO</value>
+					<value>S1_FNL_RNWPS_SRVNO</value>
+				</set>
+			</property>
+		</bean>
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="AFB0120" />
+			<property name="onMessagePatternName" value="RECEIVE" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="sndSysId" value='IIM' />
+			<property name="rcvSysId" value='IME' />
+			<property name="fields">
+				<set>
+					<value>S1_IMAGCRTYCD</value>
+					<value>S1_INDCTN_SVNC_TGT_BENO</value>
+					<value>S1_ODNR_IDTF_CTNT</value>
+					<value>S1_ETDVSCD</value>
+					<value>S1_ENMY_CORPS_DVS_IDNO</value>
+					<value>S1_TGSTCD</value>
+					<value>S1_DTL_TGSTCD</value>
+					<value>S1_INSTLTN_HANGL_TTL</value>
+					<value>S1_INSTLTN_ENGLSH_TTL</value>
+					<value>S1_GGPFT_COORD</value>
+					<value>S1_MGRS_COORD</value>
+					<value>S1_FKSGNCD</value>
+					<value>S1_NCB</value>
+					<value>S1_RGST_DTTM</value>
+					<value>S1_FNL_RNWL_DTTM</value>
+				</set>
+			</property>
+		</bean>
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="AFB0130" />
+			<property name="onMessagePatternName" value="RECEIVE" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="sndSysId" value='IIM' />
+			<property name="rcvSysId" value='IME' />
+			<property name="fields">
+				<set>
+					<value>S1_INTGTGTCD</value>
+				<value>S1_ALTTD</value>
+				<value>S1_TNLZT_ENCM_NUM</value>
+				<value>S1_CSTWRK_HEAVY_TNLZT_ENCM_NUM</value>
+				<value>S1_LCHR_ENCM_NUM</value>
+				<value>S1_CSTWRK_DRNG_LCHR_ENCM_NUM</value>
+				<value>S1_MAX_IDTF_LCHR_NUM</value>
+				<value>S1_OCCPTN_BASE_YN</value>
+				<value>S1_ENGDMSLBDVCD_ID</value>
+				<value>S1_ENGDMSLBDVCD</value>
+				<value>S1_SAM_DVS_ENMYFAMC</value>
+				<value>S1_BENO</value>
+				<value>S1_SUFNO</value>
+				</set>
+			</property>
+		</bean>
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="AFB0140" />
+			<property name="onMessagePatternName" value="RECEIVE" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="sndSysId" value='IIM' />
+			<property name="rcvSysId" value='IME' />
+			<property name="fields">
+				<set>
+					<value>S1_BENO</value>
+					<value>S1_TGT_IFPPR_SN</value>
+					<value>S1_INTGTGTCD</value>
+					<value>S1_MPF_RFLTN_YN</value>
+					<value>S1_MTRLNO</value>
+					<value>S1_MPF_RFLTN_DTTM</value>
+					<value>S1_PYSCL_FST_DTL_FILE_ROUTE</value>
+					<value>S1_PYSCL_SND_DTL_FILE_ROUTE</value>
+					<value>S1_PYSCL_THRD_DTL_FILE_ROUTE</value>
+					<value>S1_PYSCL_FOTH_DTL_FILE_ROUTE</value>
+					<value>S1_PYSCL_FITH_DTL_FILE_ROUTE</value>
+					<value>S1_PYSCL_SITH_DTL_FILE_ROUTE</value>
+					<value>S1_PYSCL_SETH_DTL_FILE_ROUTE</value>
+					<value>S1_PYSCL_EITH_DTL_FILE_ROUTE</value>
+					<value>S1_RGST_DTTM</value>
+					<value>S1_FNL_RNWL_DTTM</value>
+				</set>
+			</property>
+		</bean>
+	</util:list>
+</beans>
+	          			
+	          			
+	          			
+	          			

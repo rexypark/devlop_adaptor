@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="euc-kr"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<context:annotation-config />
+  
+	<bean class="java.util.concurrent.LinkedBlockingDeque" name="sendDeque01" />
+	
+	<bean
+		class="com.mb.mci.pattern.online.manager.factory.StandardClientManagerFactory"
+		init-method="start" destroy-method="shutdown">
+		<property name="options">
+			<map>
+				<entry key="connectTimeoutMillis" value="3000" />
+				<entry key="tcpNoDelay" value="false" />
+			</map>
+		</property>
+		
+		<property name="workerCount" value="4" />
+
+		<property name="clientWorkerFactory">
+			<bean class="com.indigo.esb.uav.tcp.StayClientWorkerFactory">
+				<property name="connectStart" value="true" />
+				<property name="sendDeque"  ref="sendDeque01"/>
+                <property name="appender"   ref="csvAppenderSend" />
+			</bean>
+		</property>
+
+		<property name="contextLoader">
+			<bean class="com.mb.mci.pattern.online.context.loader.DummyContextLoader">
+				<property name="clientContext">
+					<set>
+						<bean class="com.mb.mci.pattern.online.context.ClientContext">
+							<property name="name" value="Monitor Client" />
+							<property name="ip" value="10.20.12.11" />
+							<property name="port" value="24301" />
+							<property name="desc" value="Monitor Client" />
+							<property name="retryGapSec" value="1" />
+						</bean>
+					</set>
+				</property>
+			</bean>
+		</property>
+		<property name="pipelineFactory">
+			<bean
+				class="com.mb.mci.pattern.online.pipeline.factory.StandardChannelPipelineFactory">
+				<property name="handlerMap">
+					<map>
+						<entry key="Length Field DECODER">
+							<bean
+								class="com.mb.mci.common.codec.factory.LengthFieldBasedFrameDecoderFactory">
+								<property name="maxFrameLength" value="999999" />
+								<property name="lengthFieldLength" value="6" />
+								<property name="lengthFieldOffset" value="0" />
+								<property name="lengthAdjustment" value="0" />
+								<property name="initialBytesToStrip" value="0" />
+								<property name="characterLength" value="true" />
+							</bean>
+						</entry>
+					</map>
+				</property>
+			</bean>
+		</property>
+	</bean>
+</beans>

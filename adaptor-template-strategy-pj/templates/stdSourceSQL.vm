@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${ifid}">
+	
+	<select id="SELECT" parameterType="string" resultType="hashmap">
+     	SELECT   * 
+     	FROM   ${table}
+     	WHERE 
+     	       ESB_STATE_CD = 'N'
+	</select>
+	
+	<update id="SOURCE_UPDATE" parameterType="hashmap" >
+        UPDATE ${table} 
+           SET ${stateColumn} = '${processingCode}'   ,
+        	   ${txidColumn}  = #{${txidColumn} , jdbcType=VARCHAR} 
+        WHERE
+      #foreach($pkMap in $pkList)
+         $pkMap.get("NAME") =  #{$pkMap.get("NAME") , jdbcType=$pkMap.get("TYPE")} #if( $foreach.hasNext ) AND 
+       #end
+      #end
+      
+	</update>
+	 
+	<update id="SOURCE_RESULT_UPDATE" parameterType="hashmap" >
+        UPDATE 	${table} 
+           SET	
+#if($stateColumn) 
+           		${stateColumn}  = #{${stateColumn} , jdbcType=CHAR}  ,
+#end
+#if($dateColumn) 
+           		${dateColumn}  = #{${dateColumn} , jdbcType=VARCHAR} ,
+#end
+#if($messageColumn)
+           		${messageColumn}  = #{${messageColumn} , jdbcType=VARCHAR}
+#end
+         WHERE	
+         		${txidColumn}  = #{${txidColumn} , jdbcType=VARCHAR}
+	</update>
+	
+
+</mapper>

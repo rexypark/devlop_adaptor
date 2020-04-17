@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DB_INTERFACE_001">
+	
+	<insert id="INSERT" parameterType="hashmap" >
+      INSERT INTO TEMP_USER_INFO (
+		USER_GUID      ,
+		USER_NAME      ,
+		USER_PHONE     ,
+		USER_EMAIL     ,
+		USER_COMP      ,
+		ESB_TX_ID      ,
+		ESB_STATE_CD   ,
+		ESB_TIME       ,
+		ESB_RESULT     
+      ) values (
+          #{USER_GUID, jdbcType=VARCHAR},
+          #{USER_NAME, jdbcType=VARCHAR},
+          #{USER_PHONE, jdbcType=VARCHAR},
+          #{USER_EMAIL, jdbcType=VARCHAR},
+          #{USER_COMP, jdbcType=VARCHAR},
+          #{TX_ID, jdbcType=VARCHAR},
+          'S',
+          #{ESB_TIME, jdbcType=VARCHAR},
+          'OK'
+      )
+	</insert>
+	<!--
+    <update id="CALL" statementType="CALLABLE">{CALL PROCEDURE_CALLNAME(#{TX_ID})}</update>
+	-->
+</mapper>
+	          			
+	          			
+	          			
+	          			

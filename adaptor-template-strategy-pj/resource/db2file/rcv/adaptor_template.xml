@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:annotation-config />
+
+	<util:map id="onMessagePatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="FILERCV">
+			<util:list id="onMessageList">
+				<bean class="com.indigo.esb.std.file.rcv.OnMessageNonZIpFileProcess">
+					<property name="serverInfo" value="127.0.0.1:24212" />
+				</bean>
+				<bean
+					class="com.indigo.esb.std.file.rcv.DefaultOnMessageFileAfterProcessImpl" />
+			</util:list>
+		</entry>
+	</util:map>
+	<util:list id="interfaceList">
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="IF_DB_TUTO_001" />
+			<property name="onMessagePatternName" value="FILERCV" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+			<property name="receiveDir"
+				value="D:\ESB\indigoesb-1.5.0-pj01\FILE_DIR\target\receive" />
+			<property name="tmpDir"
+				value="D:\ESB\indigoesb-1.5.0-pj01\FILE_DIR\target\rcv_temp" />
+			<property name="errDir"
+				value="D:\ESB\indigoesb-1.5.0-pj01\FILE_DIR\target\rcv_err" />
+		</bean>
+	</util:list>
+	<bean id="onSignalErrorJobListener" class="com.indigo.esb.signal.OnSignalErrorJobListener">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+	</bean>
+</beans>

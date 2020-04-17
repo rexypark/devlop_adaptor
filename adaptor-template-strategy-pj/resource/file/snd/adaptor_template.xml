@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:annotation-config />
+  
+  <util:map id="onSignalPatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="FILESND">
+			<util:list id="onSignalList">
+				<bean class="com.indigo.esb.std.file.snd.OnSignalFilePoll" >
+	            	<property name="serverInfo" value="clupine.ipost.kr:24212" />
+	            </bean>
+	            <bean class="com.indigo.esb.std.file.snd.DefaultOnSignalFileSendImpl"/>
+	            <bean class="com.indigo.esb.std.file.snd.OnSignalFileAfterSend" />
+	     	</util:list>
+		</entry> 
+	</util:map>
+	
+	<util:map id="onMessagePatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="FILERST">
+			<util:list id="onMessageList">
+				<bean class="com.indigo.esb.std.file.rcv.DefaultOnMessageFileResultProcessImpl" /> 
+            </util:list>
+		</entry>
+	</util:map>
+	
+	<util:list id="interfaceList">
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="IF_FILE_TUTO_001" />
+			<property name="onSignalPatternName" value="FILESND" />
+			<property name="onMessagePatternName" value="FILERST" />
+			<property name="targetDestinationName" value="ROUTE.IN.OTO" /> 
+	   	   	<property name="sendDir" value="E:/indigoesb/localtest/lmh_file_dir/send" /> 
+			<property name="tmpDir" value="E:/indigoesb/localtest/lmh_file_dir/snd_temp" />
+			<property name="scsDir" value="E:/indigoesb/localtest/lmh_file_dir/snd_scs" />
+			<property name="errDir" value="E:/indigoesb/localtest/lmh_file_dir/snd_err" />
+			<property name="resendDir" value="E:/indigoesb/localtest/lmh_file_dir/resend" />
+			<property name="sndSysId" value="SRC" />
+			<property name="rcvSysId" value="TGT" />
+			<!-- <property name="fileFilterPattern" value="IFS_TSGL*" /> -->
+			<property name="txidGenerator">
+				<bean class="com.indigo.esb.std.generator.TxidValueGenerator">
+					<property name="alias" value="FILE_001_" />            
+				</bean>	
+			</property>
+		</bean>
+	</util:list>
+	<bean id="onSignalErrorJobListener" class="com.indigo.esb.signal.OnSignalErrorJobListener">
+    	<property name="connectionFactory" ref="jmsConnectionFactory" />
+  	</bean>
+    
+</beans>

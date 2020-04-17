@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="euc-kr"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+    <!-- TCP 서버 포트 설정-->
+	<bean id="serverContext" class="com.mb.mci.pattern.online.context.ServerContext">
+		<property name="bindPort" value="24300" />
+		<property name="name" value="IME_RCV_SERVER" />
+		<property name="desc" value="IME 수신 서버" />
+	</bean>
+
+	<!-- 인터페이스 정의 부분 -->
+	<util:list id="interfaceList">
+        <!-- 인터페이스 추가시 <bean> 이 반복  -->
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="BAF0010" /><!-- 인터페이스명-->
+			<property name="onSignalPatternName" value="FILESND" />
+			<property name="onMessagePatternName" value="FILERST" />
+			<property name="targetDestinationName" value="ROUTE.IN.OTO" />
+            <!--송신시스템 코드 --> 		
+			<property name="sndSysId" value='IME' />
+            <!--수신시스템 코드-->
+			<property name="rcvSysId" value='IIM' />
+			<property name="txidGenerator"><!-- 고정값 -->
+				<bean class="com.indigo.esb.std.generator.TxidValueGenerator">
+					<property name="alias" value="BAF0010" /><!-- 인터페이스명-->
+				</bean>
+			</property>
+            <property name="sendDir"  value="Z:/IME_SEND" />
+            <property name="sendDir2" value="Y:/IME_SEND" />
+            <property name="copyDir"  value="F:/ESB_DATA/ESB_SEND" />
+        </bean>
+      	<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="BAF0020" /><!-- 인터페이스명-->
+			<property name="onSignalPatternName" value="FILESND" />
+			<property name="onMessagePatternName" value="FILERST" />
+			<property name="targetDestinationName" value="ROUTE.IN.OTO" />
+            <!--송신시스템 코드 --> 		
+			<property name="sndSysId" value='IME' />
+            <!--수신시스템 코드-->
+			<property name="rcvSysId" value='IIM' />
+			<property name="txidGenerator"><!-- 고정값 -->
+				<bean class="com.indigo.esb.std.generator.TxidValueGenerator">
+					<property name="alias" value="BAF0020" /><!-- 인터페이스명-->
+				</bean>
+			</property>
+            <property name="sendDir"  value="Z:/IME_SEND" />
+            <property name="sendDir2" value="Y:/IME_SEND" />
+            <property name="copyDir"  value="E:/ESB_DATA/ESB_SEND" />
+		</bean>
+        <bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="BAF0030" /><!-- 인터페이스명-->
+			<property name="onSignalPatternName" value="FILESND" />
+			<property name="onMessagePatternName" value="FILERST" />
+			<property name="targetDestinationName" value="ROUTE.IN.OTO" />
+            <!--송신시스템 코드 --> 		
+			<property name="sndSysId" value='IME' />
+            <!--수신시스템 코드-->
+			<property name="rcvSysId" value='IIM' />
+			<property name="txidGenerator"><!-- 고정값 -->
+				<bean class="com.indigo.esb.std.generator.TxidValueGenerator">
+					<property name="alias" value="BAF0030" /><!-- 인터페이스명-->
+				</bean>
+			</property>
+            <property name="sendDir"  value="Z:/IME_SEND" />
+            <property name="sendDir2" value="Y:/IME_SEND" />
+            <property name="copyDir"  value="F:/ESB_DATA/ESB_SEND" />
+		</bean>
+        <bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="BAF0040" /><!-- 인터페이스명-->
+			<property name="onSignalPatternName" value="FILESND" />
+			<property name="onMessagePatternName" value="FILERST" />
+			<property name="targetDestinationName" value="ROUTE.IN.OTO" />
+            <!--송신시스템 코드 --> 		
+			<property name="sndSysId" value='IME' />
+            <!--수신시스템 코드-->
+			<property name="rcvSysId" value='IIM' />
+			<property name="txidGenerator"><!-- 고정값 -->
+				<bean class="com.indigo.esb.std.generator.TxidValueGenerator">
+					<property name="alias" value="BAF0040" /><!-- 인터페이스명-->
+				</bean>
+			</property>
+            <property name="sendDir"  value="Z:/IME_SEND" />
+            <property name="sendDir2" value="Y:/IME_SEND" />
+            <property name="copyDir"  value="F:/ESB_DATA/ESB_SEND" />
+		</bean>
+        <bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="BAF0050" /><!-- 인터페이스명-->
+			<property name="onSignalPatternName" value="FILESND" />
+			<property name="onMessagePatternName" value="FILERST" />
+			<property name="targetDestinationName" value="ROUTE.IN.OTO" />
+            <!--송신시스템 코드 --> 		
+			<property name="sndSysId" value='IME' />
+            <!--수신시스템 코드-->
+			<property name="rcvSysId" value='IIM' />
+			<property name="txidGenerator"><!-- 고정값 -->
+				<bean class="com.indigo.esb.std.generator.TxidValueGenerator">
+					<property name="alias" value="BAF0050" /><!-- 인터페이스명-->
+				</bean>
+			</property>
+            <property name="sendDir"  value="Z:/IME_SEND" />
+            <property name="sendDir2" value="Y:/IME_SEND" />
+            <property name="copyDir"  value="F:/ESB_DATA/ESB_SEND" />
+		</bean>      
+	</util:list>
+</beans>
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			

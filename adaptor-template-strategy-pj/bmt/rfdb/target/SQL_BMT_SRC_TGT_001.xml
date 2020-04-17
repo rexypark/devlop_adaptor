@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BMT_SRC_TGT_001">
+	
+	<insert id="INSERT" parameterType="hashmap" >
+     	INSERT INTO MCI_ONLINE_LOG (SEQNUM, ADAPTOR_NAME,LOG_TIME,COMM_TYPE,COMM_OP,INOUT_FLAG,TRAN_CODE,TRAN_SEQ,STATUS )
+		VALUES (#{SEQNUM} , #{ADAPTOR_NAME}, #{LOG_TIME}, #{COMM_TYPE}, #{COMM_OP}, #{INOUT_FLAG}, #{TRAN_CODE}, #{TRAN_SEQ}, #{STATUS} )
+	</insert>
+</mapper>

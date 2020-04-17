@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="IF_ACC_RACC_M_R_002">
+	
+	<update id="INSERT" parameterType="map" >
+		MERGE INTO 
+			TB_ESB02 
+		USING DUAL ON ( 
+			OFC_WRKR_CON_SEQ =  #{OFC_WRKR_CON_SEQ,jdbcType=SMALLINT} 
+		) WHEN MATCHED THEN
+		UPDATE SET 
+			OFC_CON_SEQ = #{OFC_CON_SEQ,jdbcType=SMALLINT} ,
+			OFC_WRKR_CLS_CD = #{OFC_WRKR_CLS_CD,jdbcType=VARCHAR} ,
+			OFC_WRKR_NAME = #{OFC_WRKR_NAME,jdbcType=VARCHAR} ,
+			REG_NO = #{REG_NO,jdbcType=VARCHAR} ,
+			OFC_WRKR_R_ENR_NO = #{OFC_WRKR_R_ENR_NO,jdbcType=VARCHAR} ,
+			OFC_WRKR_PTBL_TELNO = #{OFC_WRKR_PTBL_TELNO,jdbcType=VARCHAR} ,
+			OFC_WRKR_EMAIL_ADDR = #{OFC_WRKR_EMAIL_ADDR,jdbcType=VARCHAR} ,
+			OFC_WRKR_ADDR = #{OFC_WRKR_ADDR,jdbcType=VARCHAR} ,
+			DICPLN_FORM = #{DICPLN_FORM,jdbcType=VARCHAR} ,
+			DICPLN_DETL = #{DICPLN_DETL,jdbcType=VARCHAR} ,
+			REP_DRCTR_YN = #{REP_DRCTR_YN,jdbcType=VARCHAR} ,
+			ESB_TX_ID = #{ESB_TX_ID,jdbcType=VARCHAR} ,
+			ESB_STATE_CD ='S' ,
+			ESB_TIME = #{ESB_TIME , jdbcType=VARCHAR}	,
+			ESB_CUD = #{ESB_CUD,jdbcType=CHAR} ,
+			DPS_TRANS_YN = #{DPS_TRANS_YN,jdbcType=CHAR} ,
+			DPS_TRANS_TIME = #{DPS_TRANS_TIME,jdbcType=VARCHAR}  
+		WHEN NOT MATCHED THEN
+		INSERT (
+			OFC_WRKR_CON_SEQ ,
+			OFC_CON_SEQ ,
+			OFC_WRKR_CLS_CD ,
+			OFC_WRKR_NAME ,
+			REG_NO ,
+			OFC_WRKR_R_ENR_NO ,
+			OFC_WRKR_PTBL_TELNO ,
+			OFC_WRKR_EMAIL_ADDR ,
+			OFC_WRKR_ADDR ,
+			DICPLN_FORM ,
+			DICPLN_DETL ,
+			REP_DRCTR_YN ,
+			ESB_TX_ID ,
+			ESB_STATE_CD ,
+			ESB_TIME ,
+			ESB_CUD ,
+			DPS_TRANS_YN ,
+			DPS_TRANS_TIME 
+		)
+		VALUES (
+			#{OFC_WRKR_CON_SEQ,jdbcType=SMALLINT} ,
+			#{OFC_CON_SEQ,jdbcType=SMALLINT} ,
+			#{OFC_WRKR_CLS_CD,jdbcType=VARCHAR} ,
+			#{OFC_WRKR_NAME,jdbcType=VARCHAR} ,
+			#{REG_NO,jdbcType=VARCHAR} ,
+			#{OFC_WRKR_R_ENR_NO,jdbcType=VARCHAR} ,
+			#{OFC_WRKR_PTBL_TELNO,jdbcType=VARCHAR} ,
+			#{OFC_WRKR_EMAIL_ADDR,jdbcType=VARCHAR} ,
+			#{OFC_WRKR_ADDR,jdbcType=VARCHAR} ,
+			#{DICPLN_FORM,jdbcType=VARCHAR} ,
+			#{DICPLN_DETL,jdbcType=VARCHAR} ,
+			#{REP_DRCTR_YN,jdbcType=VARCHAR} ,
+			#{ESB_TX_ID,jdbcType=VARCHAR} ,
+			'S' ,
+			#{ESB_TIME , jdbcType=VARCHAR} ,
+			#{ESB_CUD,jdbcType=CHAR} ,
+			#{DPS_TRANS_YN,jdbcType=CHAR} ,
+			#{DPS_TRANS_TIME,jdbcType=VARCHAR} 
+		)
+	</update>
+	
+	<insert id="INSERT_ONLY" parameterType="map" >
+		INSERT INTO TB_ESB02 (
+			OFC_WRKR_CON_SEQ ,
+			OFC_CON_SEQ ,
+			OFC_WRKR_CLS_CD ,
+			OFC_WRKR_NAME ,
+			REG_NO ,
+			OFC_WRKR_R_ENR_NO ,
+			OFC_WRKR_PTBL_TELNO ,
+			OFC_WRKR_EMAIL_ADDR ,
+			OFC_WRKR_ADDR ,
+			DICPLN_FORM ,
+			DICPLN_DETL ,
+			REP_DRCTR_YN ,
+			ESB_TX_ID ,
+			ESB_STATE_CD ,
+			ESB_TIME ,
+			ESB_CUD ,
+			DPS_TRANS_YN ,
+			DPS_TRANS_TIME 
+         )
+        VALUES (
+			#{OFC_WRKR_CON_SEQ,jdbcType=SMALLINT} ,
+			#{OFC_CON_SEQ,jdbcType=SMALLINT} ,
+			#{OFC_WRKR_CLS_CD,jdbcType=VARCHAR} ,
+			#{OFC_WRKR_NAME,jdbcType=VARCHAR} ,
+			#{REG_NO,jdbcType=VARCHAR} ,
+			#{OFC_WRKR_R_ENR_NO,jdbcType=VARCHAR} ,
+			#{OFC_WRKR_PTBL_TELNO,jdbcType=VARCHAR} ,
+			#{OFC_WRKR_EMAIL_ADDR,jdbcType=VARCHAR} ,
+			#{OFC_WRKR_ADDR,jdbcType=VARCHAR} ,
+			#{DICPLN_FORM,jdbcType=VARCHAR} ,
+			#{DICPLN_DETL,jdbcType=VARCHAR} ,
+			#{REP_DRCTR_YN,jdbcType=VARCHAR} ,
+			#{ESB_TX_ID,jdbcType=VARCHAR} ,
+			'S' ,
+			#{ESB_TIME , jdbcType=VARCHAR} ,
+			#{ESB_CUD,jdbcType=CHAR} ,
+			#{DPS_TRANS_YN,jdbcType=CHAR} ,
+			#{DPS_TRANS_TIME,jdbcType=VARCHAR} 
+        )
+	</insert>
+</mapper>
+
+
+
+
+
+
+ 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="BMT_SRC_TGT_001">
+
+	<select id="SELECT" parameterType="string" resultType="hashmap">
+		SELECT * FROM MCI_ONLINE_LOG
+		WHERE SEQNUM <![CDATA[ >= ]]>  #{START_NUM} 
+		AND   SEQNUM <![CDATA[ <= ]]>  #{END_NUM}
+	</select>
+	
+<!-- 	<select id="SELECT" parameterType="string" resultType="hashmap"> -->
+<!-- 		SELECT * FROM (SELECT ROWNUM AS SEQNUM , t1.*  from MCI_ONLINE_LOG  t1) -->
+<!-- 		WHERE SEQNUM <![CDATA[ >= ]]>  #{START_NUM}  -->
+<!-- 		AND   SEQNUM <![CDATA[ <= ]]>  #{END_NUM} -->
+<!-- 	</select> -->
+
+
+<!--
+ <select id="SELECT" parameterType="string" resultType="hashmap">
+	SELECT i.rn, t.* 
+	  FROM (SELECT i.*
+	          FROM (SELECT i.*, ROWNUM AS rn 
+	                  FROM (
+	                        SELECT ROWID AS a_rowid
+	                          FROM MCI_ONLINE_LOG t
+	                       ) i
+	                 WHERE ROWNUM <= <![CDATA[ <= ]]>  #{END_NUM}
+	               ) i
+	         WHERE rn <![CDATA[ >= ]]>  #{START_NUM}
+	       ) i
+	     , MCI_ONLINE_LOG t
+	 WHERE i.a_rowid = t.ROWID
+ ORDER BY rn		
+</select>
+ -->
+ </mapper>

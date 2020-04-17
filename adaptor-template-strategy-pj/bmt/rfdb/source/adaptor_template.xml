@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<context:annotation-config />
+
+	<util:map id="onSignalPatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="DBSND">
+			<util:list id="OnSignalList">
+				<bean class="com.indigo.esb.bmt.db.DBParallelPollingData" />
+			</util:list>
+		</entry>
+	</util:map>
+
+	<util:map id="onMessagePatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="DBRST">
+			<util:list id="onMessageList">
+			</util:list>
+		</entry>
+	</util:map>
+
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- DB ReferenceFile -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="datasource" />
+		<property name="mapperLocations" >
+			<list>
+                <value>SQL_BMT_SRC_TGT_001.xml</value>
+			</list>
+		</property>
+		<property name="configLocation" value="configure.xml" />
+	</bean>
+
+	<!-- Interface Info -->
+	<util:list id="interfaceList">
+        <bean class="com.indigo.esb.config.DBInterfaceInfo">
+			<property name="interfaceId" value="BMT_SRC_TGT_001" />  	  
+			<property name="onSignalPatternName" value="DBSND" />		  
+			<property name="onMessagePatternName" value="DBRST" />  	  
+			<property name="targetDestinationName" value="ROUTE.IN.OTO" />
+			<property name="sndSysId" value='SRC' /> 					  
+			<property name="rcvSysId" value='TGT' />                      
+			<property name="txIdColName"     value="ESB_TX_ID" />
+			<property name="stateColName"    value="ESB_STATE_CD" />
+			<property name="timeColName"     value="ESB_TIME" />
+			<property name="txidGenerator">
+				<bean class="com.indigo.esb.std.generator.TxidValueGenerator">
+					<property name="alias" value="DD001" />            
+				</bean>	
+			</property>
+			<property name="ip" value="127.0.0.1" />
+			<property name="port" value="5234" />
+			<property name="fixTotalCount" value="1000000" />
+			<property name="parallelCount" value="100" />
+			<property name="sendRowCount" value="4000" />
+			
+		</bean>        
+	</util:list>
+</beans>

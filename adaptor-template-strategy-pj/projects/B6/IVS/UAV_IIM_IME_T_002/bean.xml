@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean class="org.springframework.jms.core.JmsTemplate" id="jmsTemplate">
+        <description/>
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="deliveryMode" value="2"/>
+        <property name="priority" value="4"/>
+        <property name="timeToLive" value="-1"/>
+        <property name="pubSubDomain" value="false"/>
+        <property name="explicitQosEnabled" value="true"/>
+        <property name="sessionTransacted" value="true"/>
+    </bean>
+    <bean class="com.indigo.indigomq.pool.PooledConnectionFactory"
+        destroy-method="stop" id="jmsConnectionFactory">
+        <description/>
+        <property name="connectionFactory">
+            <bean class="com.indigo.indigomq.IndigoMQConnectionFactory">
+                <property name="brokerURL">
+                    <value>failover:(tcp://10.20.12.22:24211,tcp://10.20.12.22:24211)?initialReconnectDelay=5000&amp;maxReconnectDelay=5000&amp;randomize=false</value>
+                </property>
+            </bean>
+        </property>
+        <property name="maxConnections" value="4"/>
+        <property name="idleTimeout" value="30000"/>
+        <property name="maximumActive" value="500"/>
+    </bean>
+    <bean
+        class="org.springframework.jms.listener.DefaultMessageListenerContainer" id="AdaptorTemplateMessageListenerContainer">
+        <description>AdaptorTemplateMessageListenerContainer</description>
+        <property name="concurrentConsumers" value="2"/>
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destinationName" value="DEST.IIMIME"/>
+        <property name="messageListener" ref="iservice"/>
+        <property name="messageSelector" value="if_id in ('AFB0010','AFB0020','AFB0030','AFB0040','AFB0050','AFB0060','AFB0070','AFB0080','AFB0090','AFB0100','AFB0110','AFB0120','AFB0130','AFB0140') and dest_id='G02'"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="receiveTimeout" value="5000"/>
+        <property name="pubSubDomain" value="false"/>
+    </bean>
+    <import resource="adaptor_template.xml"/>
+    <bean autowire="default"
+        class="com.indigo.esb.std.IndigoCustomAdaptor"
+        dependency-check="default" id="iservice" lazy-init="default">
+        <description/>
+        <property name="interfaceList" ref="interfaceList">
+            <description/>
+        </property>
+        <property name="onMessagePatternMap" ref="onMessagePatternMap">
+            <description/>
+        </property>
+        <property name="direction" value="target"/>
+    </bean>
+    <bean class="com.mb.indigo2.springsupport.AdaptorConfigBean" id="adaptorBean">
+        <description><![CDATA[]]></description>
+        <property name="adaptorName" value="UAV_IIM_IME_T_002"/>
+        <property name="heartBeatInterval" value="60"/>
+        <property name="port" value="25006"/>
+        <property name="socketTimeOut" value="60"/>
+        <property name="netChkList">
+            <list/>
+        </property>
+    </bean>
+</beans>

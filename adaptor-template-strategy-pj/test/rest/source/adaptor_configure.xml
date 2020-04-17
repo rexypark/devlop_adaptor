@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="euc-kr"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- Interface Info -->
+	<util:list id="interfaceList">
+		<bean class="com.indigo.esb.config.RestInterfaceInfo">
+			<property name="interfaceId" value="DD_SRC_TGT_001" />
+			<property name="onSignalPatternName" value="RESTSND" />
+			<property name="onMessagePatternName" value="RESTRST" />
+			<property name="targetDestinationName" value="ROUTE.IN.OTO" />
+			<property name="sndSysId" value='SRC' />
+			<property name="rcvSysId" value='TGT' />
+			<property name="txidGenerator">
+				<bean class="com.indigo.esb.std.generator.TxidValueGenerator">
+					<property name="alias" value="RD001" />
+				</bean>
+			</property>
+			<property name="listConvertor">
+				<bean class="com.indigo.esb.convertor.RestXml2ListConvertor"  >
+					<property name="itemsXpath" value="//body/items/item" />
+				</bean>
+			</property>
+			<property name="url" value="http://openapi.epis.or.kr/openapi/service/InsttExaminPcService/getGarakDelngInfoList" />
+			<property name="paramList">
+				<list>	
+					<list>
+						<bean class="org.apache.http.message.BasicNameValuePair">
+							<constructor-arg index="0" value="ServiceKey" />
+							<constructor-arg index="1" value="7wN73nJrxhUgLp4Z927RGjhTqdoGFAS3ASWb9ODH/W0brHgxyRLom1eST15xFdYI7RPTF6xruKFufpcARzbERw==" />
+						</bean>
+						<bean class="org.apache.http.message.BasicNameValuePair">
+							<constructor-arg index="0" value="from_date" />
+							<constructor-arg index="1" value="20141022" />
+						</bean>
+						<bean class="org.apache.http.message.BasicNameValuePair">
+							<constructor-arg index="0" value="to_date" />
+							<constructor-arg index="1" value="20141022" />
+						</bean>
+						<bean class="org.apache.http.message.BasicNameValuePair">
+							<constructor-arg index="0" value="numOfRows" />
+							<constructor-arg index="1" value="10000" />
+						</bean>
+					</list>
+				</list>
+			</property>
+		</bean>
+	</util:list>
+
+</beans>

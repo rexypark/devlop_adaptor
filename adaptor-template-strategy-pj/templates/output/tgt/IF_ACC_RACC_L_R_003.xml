@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="IF_ACC_RACC_L_R_003">
+	
+	<update id="INSERT" parameterType="map" >
+		MERGE INTO 
+			TB_ESB03 
+		USING DUAL ON ( 
+			ATONY_CON_SEQ =  #{ATONY_CON_SEQ,jdbcType=SMALLINT} 
+		) WHEN MATCHED THEN
+		UPDATE SET 
+			AGENT_NO = #{AGENT_NO,jdbcType=VARCHAR} ,
+			REGION_NAME = #{REGION_NAME,jdbcType=VARCHAR} ,
+			AGENT_NAME = #{AGENT_NAME,jdbcType=VARCHAR} ,
+			AGENT_ADDR = #{AGENT_ADDR,jdbcType=VARCHAR} ,
+			TEL_NO = #{TEL_NO,jdbcType=VARCHAR} ,
+			LOSS_RESN = #{LOSS_RESN,jdbcType=VARCHAR} ,
+			CORP_NAME = #{CORP_NAME,jdbcType=VARCHAR} ,
+			CORP_CAPTAIN = #{CORP_CAPTAIN,jdbcType=VARCHAR} ,
+			AGENT_CLS_CD = #{AGENT_CLS_CD,jdbcType=VARCHAR} ,
+			ESB_TX_ID = #{ESB_TX_ID,jdbcType=VARCHAR} ,
+			ESB_STATE_CD ='S' ,
+			ESB_TIME = #{ESB_TIME , jdbcType=VARCHAR}	,
+			ESB_CUD = #{ESB_CUD,jdbcType=CHAR} ,
+			DPS_TRANS_YN = #{DPS_TRANS_YN,jdbcType=CHAR} ,
+			DPS_TRANS_TIME = #{DPS_TRANS_TIME,jdbcType=VARCHAR}  
+		WHEN NOT MATCHED THEN
+		INSERT (
+			ATONY_CON_SEQ ,
+			AGENT_NO ,
+			REGION_NAME ,
+			AGENT_NAME ,
+			AGENT_ADDR ,
+			TEL_NO ,
+			LOSS_RESN ,
+			CORP_NAME ,
+			CORP_CAPTAIN ,
+			AGENT_CLS_CD ,
+			ESB_TX_ID ,
+			ESB_STATE_CD ,
+			ESB_TIME ,
+			ESB_CUD ,
+			DPS_TRANS_YN ,
+			DPS_TRANS_TIME 
+		)
+		VALUES (
+			#{ATONY_CON_SEQ,jdbcType=SMALLINT} ,
+			#{AGENT_NO,jdbcType=VARCHAR} ,
+			#{REGION_NAME,jdbcType=VARCHAR} ,
+			#{AGENT_NAME,jdbcType=VARCHAR} ,
+			#{AGENT_ADDR,jdbcType=VARCHAR} ,
+			#{TEL_NO,jdbcType=VARCHAR} ,
+			#{LOSS_RESN,jdbcType=VARCHAR} ,
+			#{CORP_NAME,jdbcType=VARCHAR} ,
+			#{CORP_CAPTAIN,jdbcType=VARCHAR} ,
+			#{AGENT_CLS_CD,jdbcType=VARCHAR} ,
+			#{ESB_TX_ID,jdbcType=VARCHAR} ,
+			'S' ,
+			#{ESB_TIME , jdbcType=VARCHAR} ,
+			#{ESB_CUD,jdbcType=CHAR} ,
+			#{DPS_TRANS_YN,jdbcType=CHAR} ,
+			#{DPS_TRANS_TIME,jdbcType=VARCHAR} 
+		)
+	</update>
+	
+	<insert id="INSERT_ONLY" parameterType="map" >
+		INSERT INTO TB_ESB03 (
+			ATONY_CON_SEQ ,
+			AGENT_NO ,
+			REGION_NAME ,
+			AGENT_NAME ,
+			AGENT_ADDR ,
+			TEL_NO ,
+			LOSS_RESN ,
+			CORP_NAME ,
+			CORP_CAPTAIN ,
+			AGENT_CLS_CD ,
+			ESB_TX_ID ,
+			ESB_STATE_CD ,
+			ESB_TIME ,
+			ESB_CUD ,
+			DPS_TRANS_YN ,
+			DPS_TRANS_TIME 
+         )
+        VALUES (
+			#{ATONY_CON_SEQ,jdbcType=SMALLINT} ,
+			#{AGENT_NO,jdbcType=VARCHAR} ,
+			#{REGION_NAME,jdbcType=VARCHAR} ,
+			#{AGENT_NAME,jdbcType=VARCHAR} ,
+			#{AGENT_ADDR,jdbcType=VARCHAR} ,
+			#{TEL_NO,jdbcType=VARCHAR} ,
+			#{LOSS_RESN,jdbcType=VARCHAR} ,
+			#{CORP_NAME,jdbcType=VARCHAR} ,
+			#{CORP_CAPTAIN,jdbcType=VARCHAR} ,
+			#{AGENT_CLS_CD,jdbcType=VARCHAR} ,
+			#{ESB_TX_ID,jdbcType=VARCHAR} ,
+			'S' ,
+			#{ESB_TIME , jdbcType=VARCHAR} ,
+			#{ESB_CUD,jdbcType=CHAR} ,
+			#{DPS_TRANS_YN,jdbcType=CHAR} ,
+			#{DPS_TRANS_TIME,jdbcType=VARCHAR} 
+        )
+	</insert>
+</mapper>
+
+
+
+
+
+
+ 

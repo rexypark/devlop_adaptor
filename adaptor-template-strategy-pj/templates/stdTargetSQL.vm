@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${ifid}">
+	
+	<insert id="INSERT" parameterType="hashmap" >
+		INSERT INTO $table  	
+		(
+#foreach($columnMap in $columnList)
+           $columnMap.get("NAME") #if( $foreach.hasNext ) , 
+#end
+#end
+
+         )
+        VALUES 
+        (
+#foreach($columnMap in $columnList)
+#set( $columnName = $columnMap.get("NAME") )
+#if($columnName == $stateColumn)
+           '$successCode' , 
+#else
+           #{$columnName  ,  jdbcType=$columnMap.get("TYPE")} #if( $foreach.hasNext )  , 
+#end
+#end
+#end
+
+        )
+	</insert>
+	
+	<update id="call" statementType="CALLABLE">{CALL ${procedure}}</update>
+</mapper>

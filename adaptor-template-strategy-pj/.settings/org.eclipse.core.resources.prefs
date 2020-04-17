@@ -1,0 +1,6 @@
+eclipse.preferences.version=1
+encoding//src/com/indigo/esb/uav/tcp/CBITConnectClientWorker.java=UTF8
+encoding//src/com/indigo/esb/uav/tcp/StayConnectClientWorker.java=UTF8
+encoding//test/flatfile/source/sample.csv=EUC-KR
+encoding//test/flatfile/source/sample.prn=EUC-KR
+encoding/<project>=UTF-8

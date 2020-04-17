@@ -1,0 +1,9 @@
+		<!-- {snd}, {orgName}, {orgCode}  -->
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="P02_IF{id}_{snd}_NDFC" />
+			<property name="onMessagePatternName" value="FILERCV" />
+			<property name="targetDestinationName" value="RETURN.IN.OTO" />
+	   	   	<property name="receiveDir" value="/apps/indigo/indigo_server/rcv/IF-DT-{id}/receive" />
+			<property name="tmpDir"     value="/apps/indigo/indigo_server/rcv/IF-DT-{id}/temp" />
+			<property name="errDir"     value="/apps/indigo/indigo_server/rcv/IF-DT-{id}/err" />
+		</bean>

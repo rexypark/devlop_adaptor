@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:annotation-config />
+
+	<util:map id="onMessagePatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="RECEIVE">
+			<util:list id="onMessageList">
+				<bean class="com.indigo.esb.std.com.rcv.DecryptionProcess" />
+				<bean class="com.indigo.esb.uav.rcv.GetAttachFileProcess">
+					<property name="ip" value="10.20.12.22" />
+					<property name="port" value="24400" />
+					<property name="retrievePath" value="/ESB_FILE_STORE" />
+					<property name="tryCnt" value="5" />
+					<property name="user" value="indigo" />
+					<property name="password" value="indigo" />
+				</bean>
+				<bean class="com.indigo.esb.uav.rcv.TCPTransferProcess" />
+				<bean class="com.indigo.esb.std.com.rcv.DataToJMSProcess" />
+			</util:list>
+		</entry>
+	</util:map>
+
+	<bean id="imeClient" class="com.indigo.esb.uav.tcp.IMEClient">
+      
+		<constructor-arg index="0" value="10.20.12.61" />
+		<constructor-arg index="1" value="24300" />
+		<property name="lengthDecoderFactory">
+			<bean
+				class="com.mb.mci.common.codec.factory.LengthFieldBasedFrameDecoderFactory">
+				<property name="maxFrameLength" value="999999" />
+				<property name="lengthFieldLength" value="6" />
+				<property name="lengthFieldOffset" value="0" />
+				<!-- Total length - (lengthFieldOffset + lengthFieldLength + lengthFieldValue) 
+					= lengthAdjustment -->
+				<property name="lengthAdjustment" value="0" />
+				<property name="initialBytesToStrip" value="0" />
+				<property name="characterLength" value="true" />
+			</bean>
+		</property>
+	</bean>
+
+
+	<import resource="adaptor_configure.xml" />
+
+</beans>
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			

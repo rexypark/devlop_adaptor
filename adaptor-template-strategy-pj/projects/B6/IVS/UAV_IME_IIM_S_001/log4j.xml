@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="euc-kr"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration debug="false" xmlns:log4j="http://jakarta.apache.org/log4j/">
+    <appender class="org.apache.log4j.ConsoleAppender" name="CONSOLE">
+        <param name="threshold" value="DEBUG"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%d{yy.MM.dd HH:mm:ss}] [%-5p]  [%t %C:%L ] - %m%n"/>
+        </layout>
+    </appender>
+    <appender class="org.apache.log4j.RollingFileAppender" name="FILE">
+        <param name="threshold" value="DEBUG"/>
+        <param name="file" value="../log/UAV_IME_IIM_S_001/UAV_IME_IIM_S_001.log"/>
+        <param name="maxFileSize" value="10MB"/>
+        <param name="maxBackupIndex" value="10"/>
+        <param name="append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <!--param name="ConversionPattern" value="%d{ABSOLUTE} | %-5p | %-10t | %-24.24c{1} | %-30.30C %4L | %m%n"/-->
+            <param name="ConversionPattern" value="[%d{yy.MM.dd HH:mm:ss}] [%-5p]  [%t %C:%L ] - %m%n"/>
+        </layout>
+    </appender>
+    <logger name="com.indigo.indigomq">
+        <level value="WARN"/>
+    </logger>
+    <logger name="com.indigo.indigomq.transport.InactivityMonitor">
+        <level value="WARN"/>
+    </logger>
+    <logger name="com.indigo.indigomq.transport.discovery">
+        <level value="WARN"/>
+    </logger>
+    <logger name="org.springframework.jms.listener">
+        <level value="WARN"/>
+    </logger>
+    <root>
+        <level value="DEBUG"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+</log4j:configuration>

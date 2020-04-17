@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:annotation-config />
+	
+	<util:list id="interfaceList">
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="FILE_INTERFACE_001" />
+			<property name="onSignalPatternName" value="FILESND" />
+			<property name="onMessagePatternName" value="FILERST" />
+			<property name="targetDestinationName" value="ROUTE.IN.OTO" /> 
+	   	   	<property name="sendDir" value="/home/indigopj/file/send" /> 
+          	<property name="tmpDir"  value="/home/indigopj/file/send/temp" />
+          	<property name="scsDir"  value="/home/indigopj/file/send/success" />
+            <property name="errDir"  value="/home/indigopj/file/send/error" />
+            <property name="resendDir" value="/home/indigopj/file/send/resend" />
+			<property name="sndSysId" value="SRC" />
+			<property name="rcvSysId" value="TGT" />
+			<property name="fileFilterPattern" value="*.xml" />
+			<property name="txidGenerator">
+				<bean class="com.indigo.esb.std.generator.TxidValueGenerator">
+					<property name="alias" value="FILE_001_" />            
+				</bean>	
+			</property>
+		</bean>
+	</util:list>
+	    
+</beans>

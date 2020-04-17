@@ -1,0 +1,21 @@
+		<!-- {rcv}, {orgName}, {orgCode}  -->
+		<bean class="com.indigo.esb.config.FileInterfaceInfo">
+			<property name="interfaceId" value="P03_IF{id}_NDFC_{rcv}" />
+			<property name="onSignalPatternName" value="FILESND" />
+			<property name="onMessagePatternName" value="FILERST" />
+			<property name="targetDestinationName" value="ROUTE.IN.OTO" />
+			<property name="sendDir" value="/apps/indigo/indigo_server/send/IF-DT-{id}/snd" />
+			<property name="tmpDir" value="/apps/indigo/indigo_server/send/IF-DT-{id}/tmp" />
+			<property name="scsDir" value="/apps/indigo/indigo_server/send/IF-DT-{id}/scs" />
+			<property name="errDir" value="/apps/indigo/indigo_server/send/IF-DT-{id}/err" />
+			<property name="resendDir" value="/apps/indigo/indigo_server/send/IF-DT-{id}/resend" />
+			<property name="fileFilterPattern" value="{orgCode}_*.xml" /> 
+			<property name="sndSysId" value="NDF" />
+			<property name="rcvSysId" value="{rcv3}" />
+			<property name="txidGenerator">
+				<bean class="com.indigo.esb.std.generator.TxidValueGenerator">
+					<property name="alias" value="NDFC_{rcv}_IF{id}_FILE_" />
+				</bean>
+			</property>
+			<property name="attachFilePath" value="/apps/indigo/indigo_server/send/attachFile" />
+		</bean>

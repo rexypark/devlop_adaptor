@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="euc-kr"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+    <bean class="com.indigo.esb.schedule.OldScheduleBean" id="adaptorTemplateSchedule">
+        <description>adaptorTemplateSchedule</description>
+        <property name="targetObject" ref="iservice"/>
+        <property name="threadCount" value="1"/>
+        <property name="timeList">
+            <list>
+                <value>[cronExpression=0/10 * * * * ?,args=DD_SRC_TGT_001,concurrent=false]</value>
+            </list>
+        </property>
+    </bean>
+    
+    <bean class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close" id="datasource_src">
+        <description><![CDATA[]]></description>
+        <property name="url" value="jdbc:oracle:thin:@clupine.ipost.kr:1521:XE"/>
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="username" value="indigoesbcjhc"/>
+        <property name="password" value="indigoesbcjhc"/>
+        <property name="defaultAutoCommit" value="FALSE"/>
+    </bean>
+    
+<!--     <bean class="org.apache.commons.dbcp.BasicDataSource" -->
+<!--         destroy-method="close" id="datasource_src"> -->
+<!--         <description><![CDATA[]]></description> -->
+<!--         <property name="url" value="jdbc:interbase://10.1.3.224:3050/C:/Borland/InterBase/examples/database/employee.gdb" /> -->
+<!--         <property name="driverClassName" value="interbase.interclient.Driver"/> -->
+<!--         <property name="username" value="sysdba"/> -->
+<!--         <property name="password" value="masterkey"/> -->
+<!--         <property name="defaultAutoCommit" value="FALSE"/> -->
+<!--         <property name="maxWait" value="-1"/> -->
+<!--         <property name="initialSize" value="2"/> -->
+<!--         <property name="maxActive" value="4"/> -->
+<!--         <property name="minIdle" value="0"/> -->
+<!--         <property name="maxIdle" value="2"/> -->
+<!--     </bean> -->
+
+
+    <bean class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close" id="datasource_tgt">
+        <description><![CDATA[]]></description>
+        <property name="url" value="jdbc:oracle:thin:@clupine.ipost.kr:1521:XE"/>
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="username" value="indigoesbcjhc"/>
+        <property name="password" value="indigoesbcjhc"/>
+        <property name="defaultAutoCommit" value="FALSE"/>
+    </bean>
+
+	<!-- DB ReferenceFile Source -->
+	<bean id="sqlSessionFactory_src" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="datasource_src" />
+		<property name="mapperLocations" >
+			<list>
+                <value>SQL_DD_SRC_TGT_001.xml</value>
+			</list>
+		</property>
+		<property name="configLocation" value="configure.xml" />
+	</bean>
+
+	<!-- DB ReferenceFile Target -->
+	<bean id="sqlSessionFactory_tgt" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="datasource_tgt" />
+		<property name="mapperLocations" >
+			<list>
+                <value>SQL_DD_SRC_TGT_001.xml</value>
+			</list>
+		</property>	
+		<property name="configLocation" value="configure.xml" />
+	</bean>
+
+	<!-- Interface Info -->
+	<util:list id="interfaceList">
+        <bean class="com.indigo.esb.config.DBInterfaceInfo">
+			<property name="interfaceId" value="DD_SRC_TGT_001" />  	 
+			<property name="onSignalPatternName" value="DBSND" />		 
+			<property name="onMessagePatternName" value="DBRST" />  	 
+<!-- 			<property name="targetDestinationName" value="ROUTE.IN.OTO" /> -->
+			<property name="sndSysId" value='SRC' /> 					  
+			<property name="rcvSysId" value='TGT' />                      
+<!-- 			<property name="txIdColName"     value="ESB_TX_ID" /> -->
+<!-- 			<property name="stateColName"    value="ESB_STATE_CD" /> -->
+<!-- 			<property name="timeColName"     value="ESB_TIME" /> -->
+			<property name="txidGenerator">
+				<bean class="com.indigo.esb.std.generator.CJTxidValueGenerator">
+					<property name="systemCode" value="SRC" />           
+				</bean>	
+			</property>
+			<property name="storedProcedure" value="false" />
+		</bean>        
+	</util:list>
+	
+</beans>

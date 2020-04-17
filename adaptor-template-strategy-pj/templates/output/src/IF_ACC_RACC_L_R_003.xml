@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="IF_ACC_RACC_L_R_003">
+	
+	<select id="SELECT" parameterType="string" resultType="hashmap">
+     	SELECT TOP 1000
+			ATONY_CON_SEQ ,
+			AGENT_NO ,
+			REGION_NAME ,
+			AGENT_NAME ,
+			AGENT_ADDR ,
+			TEL_NO ,
+			LOSS_RESN ,
+			CORP_NAME ,
+			CORP_CAPTAIN ,
+			AGENT_CLS_CD ,
+			ESB_TX_ID ,
+			ESB_STATE_CD ,
+			ESB_TIME ,
+			ESB_CUD ,
+			DPS_TRANS_YN ,
+			DPS_TRANS_TIME 
+     	FROM   SC_TB_ESB03
+     	WHERE 
+     	       ESB_STATE_CD = 'N'
+	</select>
+	
+	<update id="SOURCE_UPDATE" parameterType="hashmap" >
+        UPDATE SC_TB_ESB03 
+           SET ESB_STATE_CD = 'P'   ,
+           	   ESB_TIME  = #{ESB_TIME , jdbcType=VARCHAR},  
+           	   ESB_TX_ID  = #{ESB_TX_ID , jdbcType=VARCHAR}
+        WHERE
+			ATONY_CON_SEQ =  #{ATONY_CON_SEQ,jdbcType=SMALLINT} 
+	</update>
+	 
+	<update id="SOURCE_RESULT_UPDATE" parameterType="hashmap" >
+        UPDATE 	SC_TB_ESB03 
+           SET	
+           		ESB_STATE_CD  = #{ESB_STATE_CD , jdbcType=CHAR}  ,
+           		ESB_TIME  = #{ESB_TIME , jdbcType=VARCHAR} 
+         WHERE	
+         		ESB_TX_ID  = #{ESB_TX_ID , jdbcType=VARCHAR}
+	</update>
+
+</mapper>
+
+

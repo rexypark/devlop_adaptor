@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="euc-kr"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<context:annotation-config />
+
+	<util:map id="onSignalPatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="FILESND">
+			<util:list id="onSignalList">
+				<bean class="com.indigo.esb.uav.snd.PutAttachFileProcess">
+					<property name="ip" value="10.20.12.22" />
+					<property name="port" value="24400" />
+                    <property name="storeDir" value="/ESB_FILE_STORE" />
+					<property name="tryCnt" value="5" />
+					<property name="user" value="indigo" />
+					<property name="password" value="indigo" />
+					<property name="encryption">
+						<bean class="com.indigo.esb.std.com.snd.EncryptionProcess">
+							<property name="cryptoType" value="NONE" />
+						</bean>
+					</property>
+				 </bean>
+				<bean class="com.indigo.esb.uav.snd.ConvertRowToJMS" />
+			</util:list>
+		</entry>
+	</util:map>
+
+	<util:map id="onMessagePatternMap" map-class="java.util.LinkedHashMap">
+		<entry key="FILERST">
+			<util:list id="onMessageList">
+				<bean class="com.indigo.esb.std.com.snd.DummyResultProcess" />
+			</util:list>
+		</entry>
+	</util:map>
+
+	<bean id="onSignalErrorJobListener" class="com.indigo.esb.signal.OnSignalErrorJobListener">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+	</bean>
+
+	<bean
+		class="com.mb.mci.pattern.online.manager.factory.StandardServerManagerFactory"
+		init-method="start" destroy-method="shutdown">
+		<property name="contextLoader">
+			<bean class="com.mb.mci.pattern.online.context.loader.DummyContextLoader">
+				<property name="serverContext">
+					<set>
+						<ref bean="serverContext" />
+					</set>
+				</property>
+			</bean>
+		</property>
+		<property name="pipelineFactory">
+			<bean
+				class="com.mb.mci.pattern.online.pipeline.factory.StandardChannelPipelineFactory">
+				<property name="handlerMap">
+					<map>
+						<entry key="Length Field DECODER">
+							<bean class="com.mb.mci.common.codec.factory.LengthFieldBasedFrameDecoderFactory" >
+								<property name="maxFrameLength" value="999999" />
+								<property name="lengthFieldLength" value="6" />
+								<property name="lengthFieldOffset" value="0" />
+						<!-- Total length - (lengthFieldOffset + lengthFieldLength + lengthFieldValue) 	= lengthAdjustment -->
+								<property name="lengthAdjustment" value="0" />  
+								<property name="initialBytesToStrip" value="0" />
+								<property name="characterLength" value="true" />
+							</bean>
+						</entry>
+						<entry key="IME TCP HANDLER">
+							<bean class="com.indigo.esb.uav.tcp.IMEReceiveHandler" />
+						</entry>
+					</map>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="inQueue" class="java.util.concurrent.LinkedBlockingQueue" />
+
+	<bean class="com.indigo.esb.std.InterfaceCaller" init-method="start"
+		destroy-method="stop">
+		<property name="serviceCount" value="5" />
+	</bean>
+
+    <bean id="monitorMap" class="java.util.LinkedHashMap" />
+
+	<bean id="callGenerator" class="com.indigo.esb.uav.tcp.IMEInterfaceGenerator" >
+		<property name="interfaceList" ref="interfaceList" />
+		<property name="monitoringInterface" value="SYS_MONITORING" />
+	</bean>
+
+	<import resource="adaptor_configure.xml" />
+</beans>
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			
+	          			

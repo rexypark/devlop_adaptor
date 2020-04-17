@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${ifid}">
+	
+	<update id="INSERT" parameterType="map" >
+		MERGE INTO 
+			$tableName 
+		USING DUAL ON ( 
+#pkWhere( $table )
+		) WHEN MATCHED THEN
+		UPDATE SET 
+#setColumns( $table.getAttribute("nonPkCols") )
+		WHEN NOT MATCHED THEN
+		INSERT (
+#allColumns($table)
+		)
+		VALUES (
+#valuesColumns($table)
+		)
+	</update>
+	
+	<update id="call" statementType="CALLABLE">{CALL ${procedure}}</update>
+	
+	<insert id="INSERT_ONLY" parameterType="map" >
+		INSERT INTO $tableName (
+#allColumns($table)
+         )
+        VALUES (
+#valuesColumns($table)
+        )
+	</insert>
+</mapper>
+
+#macro( pkWhere $table )
+#foreach($pkCol in $table.getPrimaryKey().getColumns())
+			$pkCol.name =  #{$pkCol.name,jdbcType=$pkCol.type.typeName} #if( $foreach.hasNext )AND
+#end
+#end
+
+#end
+
+#macro( allColumns $table )
+#foreach($column in $table.columns)
+			$column.name #if( $foreach.hasNext ),
+#end
+#end
+
+#end
+
+
+#macro( valuesColumns $table)
+#foreach($column in $table.columns)
+#if($column.name == $stateColumn)
+			'$successCode' #if( $foreach.hasNext ),
+#end 
+#elseif($column.name == $dateColumn)
+			systimestamp #if( $foreach.hasNext ),
+#end	
+#else 		
+			#{$column.name,jdbcType=$column.type.typeName} #if( $foreach.hasNext ),
+#end
+#end
+#end
+
+#end
+
+
+#macro( setColumns $columns)
+#foreach($column in $columns)
+#if($column.name == $stateColumn)
+			$column.name ='$successCode' #if( $foreach.hasNext ),
+#end 
+#elseif($column.name == $dateColumn)
+			$column.name = systimestamp	#if( $foreach.hasNext ),
+#end
+#else 
+			$column.name = #{$column.name,jdbcType=$column.type.typeName} #if( $foreach.hasNext ),
+#end
+#end  
+#end ##end of foreach(columns)
+
+#end ##end of macro
+
+#macro ( setEsbValue $value)
+IF_PRC_ST = '$value'
+#end

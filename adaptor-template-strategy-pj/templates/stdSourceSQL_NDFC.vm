@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${ifid}">
+	
+	<select id="SELECT" parameterType="string" resultType="hashmap">
+     	SELECT TOP 1000
+#allColumns($table)
+     	FROM   ${tableName}
+     	WHERE 
+     	       ${stateColumn} = 'N'
+	</select>
+	
+	<update id="SOURCE_UPDATE" parameterType="hashmap" >
+        UPDATE ${tableName} 
+           SET ${stateColumn} = '${processingCode}'   ,
+           	   ${dateColumn}  = #{ESB_TIME , jdbcType=VARCHAR},  
+           	   ${txidColumn}  = #{${txidColumn} , jdbcType=VARCHAR}
+        WHERE
+#pkWhere($table)
+	</update>
+	 
+	<update id="SOURCE_RESULT_UPDATE" parameterType="hashmap" >
+        UPDATE 	${tableName} 
+           SET	
+#if($stateColumn) 
+           		${stateColumn}  = #{${stateColumn} , jdbcType=CHAR}  ,
+#end
+#if($dateColumn) 
+           		${dateColumn}  = #{ESB_TIME , jdbcType=VARCHAR} 
+#end
+#if($messageColumn)
+           		${messageColumn}  = #{${messageColumn} , jdbcType=VARCHAR}
+#end
+         WHERE	
+         		${txidColumn}  = #{${txidColumn} , jdbcType=VARCHAR}
+	</update>
+
+</mapper>
+
+#macro( allColumns $table )
+#foreach($column in $table.columns)
+			$column.name #if( $foreach.hasNext ),
+#end
+#end
+
+#end
+
+#macro( pkWhere $table )
+#foreach($pkCol in $table.getPrimaryKey().getColumns())
+			$pkCol.name =  #{$pkCol.name,jdbcType=$pkCol.type.typeName} #if( $foreach.hasNext )AND
+#end
+#end
+
+#end
