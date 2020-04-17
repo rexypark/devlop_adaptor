@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="HUB_QUERY">
+
+	<select id="ROUTE_SELECT" parameterType="string" resultType="hashmap">
+		SELECT A.*  FROM ROUTE_INFO A WHERE USE_YN = 'Y'
+	</select>
+	
+	<insert id="TPLOG" parameterType="hashmap" >
+		INSERT INTO MCI_ONLINE_LOG (
+		   ADAPTOR_NAME, LOG_TIME, INOUT_FLAG, 
+		   TRAN_CODE, TRAN_SEQ, TRAN_DATA, COMM_TYPE, COMM_OP, STATUS, ERRMSG) 
+		VALUES ( 
+			#{ADAPTOR_NAME, jdbcType=VARCHAR},
+			#{LOG_TIME, jdbcType=VARCHAR},
+			#{INOUT_FLAG, jdbcType=VARCHAR},
+			#{TRAN_CODE, jdbcType=VARCHAR},
+			#{TRAN_SEQ, jdbcType=VARCHAR},
+			#{TRAN_DATA, jdbcType=BLOB},
+			#{COMM_TYPE, jdbcType=VARCHAR},
+			#{COMM_OP, jdbcType=VARCHAR},
+			#{STATUS, jdbcType=VARCHAR},
+			#{ERRMSG, jdbcType=VARCHAR}
+			)
+	</insert>
+	<insert id="MASTER" parameterType="hashmap" >
+		insert into IMS_MSG_HUB_MASTER_LOG (
+				TX_ID, 
+				IF_ID, 
+				MSG_CNT, 
+				MSG_CREATE_DT, 
+				HUB_RCV_DT, 
+				MSG_TYPE
+		) values (
+                #{TX_ID ,jdbcType=VARCHAR}, 
+				#{IF_ID ,jdbcType=VARCHAR}, 
+				#{MSG_CNT ,jdbcType=INTEGER}, 
+				#{MSG_CREATE_DT ,jdbcType=VARCHAR}, 
+				#{HUB_RCV_DT ,jdbcType=VARCHAR}, 
+				#{MSG_TYPE ,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<update id="MASTER_UPDATE"  parameterType="hashmap" >
+		UPDATE IMS_MSG_HUB_MASTER_LOG 
+		SET   
+		        IF_ID         =	#{IF_ID ,jdbcType=VARCHAR},
+				MSG_CNT       = #{MSG_CNT ,jdbcType=INTEGER},  
+				MSG_CREATE_DT = #{MSG_CREATE_DT ,jdbcType=VARCHAR},  
+				HUB_RCV_DT    = #{HUB_RCV_DT ,jdbcType=VARCHAR},  
+				MSG_TYPE      = #{MSG_TYPE ,jdbcType=VARCHAR}
+		WHERE   TX_ID         = #{TX_ID ,jdbcType=VARCHAR} 
+	</update>
+	
+	<insert id="DETAIL" parameterType="hashmap" >
+			insert into IMS_MSG_HUB_DETAIL_LOG (
+				TX_ID, 
+				DEST_ID, 
+				IF_ID, 
+				SND_CD, 
+				RCV_CD, 
+				SND_CNT, 
+				MSG_CREATE_DT, 
+				HUB_CVT_DT
+				) values (
+				#{TX_ID ,jdbcType=VARCHAR}, 
+				#{DEST_ID ,jdbcType=VARCHAR}, 
+				#{IF_ID ,jdbcType=VARCHAR}, 
+				#{SND_CD ,jdbcType=VARCHAR}, 
+				#{RCV_CD ,jdbcType=VARCHAR}, 
+				#{SND_CNT ,jdbcType=INTEGER}, 
+				#{MSG_CREATE_DT ,jdbcType=VARCHAR}, 
+				#{HUB_CVT_DT ,jdbcType=VARCHAR}
+				) 
+	</insert>
+	
+	<update id="DETAIL_UPDATE" parameterType="hashmap" >
+		UPDATE IMS_MSG_HUB_DETAIL_LOG
+		SET 	IF_ID   		= #{IF_ID   , jdbcType=VARCHAR}, 
+				SND_CD  		= #{SND_CD  , jdbcType=VARCHAR}, 
+				RCV_CD  		= #{RCV_CD  , jdbcType=VARCHAR}, 
+				SND_CNT 		= #{SND_CNT , jdbcType=INTEGER}, 
+				MSG_CREATE_DT   = #{MSG_CREATE_DT , jdbcType=VARCHAR}, 
+				HUB_CVT_DT 	    = #{HUB_CVT_DT    , jdbcType=VARCHAR}
+		WHERE   TX_ID   	    = #{TX_ID   , jdbcType=VARCHAR}
+		AND     DEST_ID 		= #{DEST_ID , jdbcType=VARCHAR}
+	</update>
+	
+	<insert id="MASTER_HUB_ERROR" parameterType="hashmap" >
+		insert into IMS_MSG_HUB_CVT_RESULT_LOG ( 
+				TX_ID,  
+				CVT_STATUS_CD,  
+				MSG_CVT_DT,  
+				ERR_CNT,  
+				ERR_MSG
+				) values (  
+				#{TX_ID ,jdbcType=VARCHAR},  
+				#{CVT_STATUS_CD ,jdbcType=VARCHAR},  
+				#{MSG_CVT_DT ,jdbcType=VARCHAR},  
+				#{ERR_CNT ,jdbcType=INTEGER},  
+				#{ERR_MSG ,jdbcType=BLOB}  
+				)
+	
+	</insert> 
+	<insert id="RESULT" parameterType="hashmap" >
+		insert into IMS_MSG_HUB_RESULT_LOG ( 
+				TX_ID, 
+				DEST_ID, 
+				STATUS_CD, 
+				MSG_RCV_DT, 
+				ERR_CNT, 
+				ERR_MSG
+				) values ( 
+				#{TX_ID ,jdbcType=VARCHAR}, 
+				#{DEST_ID ,jdbcType=VARCHAR}, 
+				#{STATUS_CD ,jdbcType=VARCHAR}, 
+				#{MSG_RCV_DT ,jdbcType=VARCHAR}, 
+				#{ERR_CNT ,jdbcType=INTEGER}, 
+				#{ERR_MSG ,jdbcType=BLOB}
+				)
+	
+	</insert>
+	
+	<update id="RESULT_UPDATE" parameterType="hashmap" >
+		update IMS_MSG_HUB_RESULT_LOG 
+		SET		STATUS_CD  = 	#{STATUS_CD ,jdbcType=VARCHAR}, 
+				MSG_RCV_DT =    #{MSG_RCV_DT ,jdbcType=VARCHAR}, 
+				ERR_CNT    =    #{ERR_CNT ,jdbcType=INTEGER}, 
+				ERR_MSG    =    #{ERR_MSG ,jdbcType=BLOB}
+		WHERE   TX_ID   = #{TX_ID ,  jdbcType=VARCHAR}
+		AND     DEST_ID = #{DEST_ID ,jdbcType=VARCHAR}		
+	
+	</update>
+	
+	<insert id="ROW" parameterType="hashmap" >
+		insert into IMS_MSG_HUB_ROW_MAP_LOG ( 
+				TX_ID, 
+				SND_CD, 
+				TRANSC_ID 
+				) values ( 
+				#{TX_ID ,jdbcType=VARCHAR}, 
+				#{SND_CD ,jdbcType=VARCHAR}, 
+				#{TRANSC_ID ,jdbcType=VARCHAR}, 
+				)
+	
+	</insert>
+	
+</mapper>

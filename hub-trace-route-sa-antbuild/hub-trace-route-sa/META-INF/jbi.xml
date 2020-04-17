@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jbi xmlns="http://java.sun.com/xml/ns/jbi" version="1.0">
+  <service-assembly>
+    <identification>
+      <name>hub-trace-route-sa-@version@</name>
+      <description>METABUILD ESB PROJECT SA: hub-trace-route-sa-@version@</description>
+    </identification>
+    <service-unit>
+      <identification>
+        <name>template-hub-trace-route-bean-su-@version@</name>
+        <description>template-hub-trace-route-bean-su-@version@</description>
+      </identification>
+      <target>
+        <artifacts-zip>template-hub-trace-route-bean-su-@version@.zip</artifacts-zip>
+        <component-name>indigo-bean</component-name>
+      </target>
+    </service-unit>
+  </service-assembly>
+</jbi>

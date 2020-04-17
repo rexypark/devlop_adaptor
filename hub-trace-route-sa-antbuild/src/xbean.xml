@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:bean="http://esb.indigo.com/bean/1.0" xmlns:route="http://esb.indigo.com/routing"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+        
+     <task:annotation-driven />
+        
+	 <bean id="propertyConfigurer"
+                class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+                
+                <property name="properties" ref="databaseConfiguration"/>
+ 	 </bean>
+        
+	 <bean id="databaseConfiguration" class="com.indigo.esb.route.IndigoDBConfigurationFactoryBean">
+	 	<property name="sqlSession" ref="sqlSession" />
+	 </bean>
+
+	
+	<bean:endpoint service="route:template-route-bean-su" endpoint="template-route-bean-su-endpoint"
+		bean="#routeBean" />
+
+	<bean id="routeBean" class="com.indigo.esb.MessageRoute">
+		<property name="jmsTemplate" ref="jmsTemplate" />
+		<property name="routeData" ref="routeData" />
+		<property name="sqlSession" ref="sqlSession" />
+		<property  name="insertRowLog" value="false" />
+		<property name="insertTpLog" value="true" />
+	</bean>
+	
+	<bean id="reTurnBean" class="com.indigo.esb.ReturnMessage">
+		<property name="jmsTemplate" ref="jmsTemplate" />
+		<property name="sqlSession" ref="sqlSession"/>
+		<property name="insertTpLog" value="true" />
+		<property name="routeData" ref="routeData" />
+	</bean>
+	
+	
+	<bean id="routeData" class="com.indigo.esb.route.DBRouteBean">
+		<property name="sqlSession" ref="sqlSession" />
+	</bean>
+
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+	</bean>
+	
+	<bean id="jmsConnectionFactory" class="com.indigo.indigomq.pool.PooledConnectionFactory"
+		destroy-method="stop">
+		<property name="connectionFactory">
+			<bean class="com.indigo.indigomq.IndigoMQConnectionFactory">
+				<property name="brokerURL">
+					<value>vm://localhost?create=false</value>
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+    <bean id="dataListenerContainer-route" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="messageListener" ref="routeBean" />
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="destinationName" value="${DATA_ARR_QUEUE}" />
+		<property name="concurrentConsumers" value="10" />
+		<property name="sessionTransacted" value="true" />
+		<property name="receiveTimeout" value="3000" />
+	</bean>
+	
+	 <bean id="dataListenerContainer-return" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="messageListener" ref="reTurnBean" />
+		<property name="connectionFactory" ref="jmsConnectionFactory" />
+		<property name="destinationName" value="${RESULT_ARR_QUEUE}" />
+		<property name="concurrentConsumers" value="10" />
+		<property name="sessionTransacted" value="true" />
+		<property name="receiveTimeout" value="3000" />
+	</bean>
+	
+	
+	<bean id="logdatasource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <property name="jndiName" value="esb.jndi.dataSource" />
+    </bean>
+    
+    
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="logdatasource" />
+		<property name="mapperLocations" value="classpath:hub_query.xml" />
+		<property name="configLocation" value="classpath:configure.xml" />
+	</bean>
+
+	<!-- 3. sqlSession -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<bean id="dbcpNativeJdbcExtractor"
+		class="org.springframework.jdbc.support.nativejdbc.CommonsDbcpNativeJdbcExtractor" />
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="logdatasource" />
+	</bean>
+
+	<aop:config>
+		<aop:advisor
+			pointcut="execution(* javax.jms.MessageListener.onMessage(..))"
+			advice-ref="txAdvice" />
+
+	</aop:config>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="*" />
+		</tx:attributes>
+	</tx:advice>
+	
+</beans>

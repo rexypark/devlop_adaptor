@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<project name="hub-trace-route-sa-antbuild" default="make SA" basedir=".">
+	<property environment="env" />
+
+	<property name="sa.version" value="1.3" />
+	<property name="sa.name" value="hub-trace-route-sa" />
+	<property name="su.name" value="template-hub-trace-route-bean-su" />
+
+	<property name="sa.base" location="${basedir}/${sa.name}" />
+	<property name="su.base" location="${sa.base}/${su.name}" />
+
+	<property name="target.dir" value="${basedir}/dest" />
+	<property name="temp.dir" value="${basedir}/dest/temp" />
+	<property name="build.dir" value="${basedir}/bin" />
+	<property name="build.sysclasspath" value="false" />
+
+	<target name="classpaths">
+		<path id="compile.classpath">
+			<fileset dir="lib" includes="*.jar" />
+		</path>
+	</target>
+
+	<target name="compile" description="compile">
+		<javac srcdir="src/" destdir="${build.dir}" classpathref="compile.classpath" />
+	</target>
+
+	<target name="make SA" depends="compile">
+
+		<echo>기존 파일 삭제</echo>
+		<delete file="${target.dir}/${sa.name}-${sa.version}.zip" />
+		<delete dir="${temp.dir}" />
+
+		<echo>SA폴더 temp로 복사</echo>
+		<copy overwrite="true" verbose="true" toDir="${temp.dir}/">
+			<fileset dir="${basedir}">
+				<include name="${sa.name}/META-INF/*" />
+			</fileset>
+		</copy>
+		<echo>버젼 변경,치환</echo>
+		<replace file="${temp.dir}/${sa.name}/META-INF/jbi.xml" token="@version@" value="${sa.version}" />
+
+		<!--
+		<copy overwrite="true" verbose="true" file="../agent-template-core/dest/adaptor_template_1.0.4.jar" toDir="${su.base}/lib/" />
+		-->
+
+		<echo>SU zip파일 만들기</echo>
+		<zip destfile="${temp.dir}/${su.name}-${sa.version}.zip">
+			<fileset dir="${su.base}">
+				<include name="*.xml" />
+				<include name="**/**" />
+			</fileset>
+			<fileset dir="${build.dir}">
+				<include name="**/*" />
+			</fileset>
+		</zip>
+
+		<echo>SA zip파일 만들기</echo>
+		<zip destfile="${target.dir}/${sa.name}-${sa.version}.zip">
+			<fileset dir="${temp.dir}/${sa.name}">
+				<include name="META-INF/jbi.xml" />
+			</fileset>
+			<fileset dir="${temp.dir}">
+				<include name="${su.name}-${sa.version}.zip" />
+			</fileset>
+		</zip>
+
+		<echo>temp 폴더 삭제</echo>
+		<delete verbose="true" dir="${temp.dir}" />
+		<!--
+		-->
+
+	</target>
+
+</project>
