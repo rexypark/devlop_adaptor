@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DB_INTERFACE_001">
+
+
+	<select id="SELECT" parameterType="string" resultType="hashmap">
+	SELECT * from TEMP_USER_INFO
+	</select>
+	
+	<select id="SELECT" parameterType="string" resultType="hashmap">
+      SELECT * from 
+		( 
+			SELECT USER_GUID,USER_NAME,USER_PHONE,USER_EMAIL,USER_COMP,ROW_NUMBER() OVER() AS ROWNUM 
+			FROM (	
+				SELECT *
+				FROM TEMP_USER_INFO
+					<choose>
+			<when test="ESB_POLL_TYPE == 'NORMAL'">
+			     WHERE ESB_STATE_CD = 'N'
+              	ORDER BY USER_GUID ASC
+                    ) as t1
+        		) as t2
+            WHERE ROWNUM &lt;= 1
+			</when>
+			<when test="ESB_POLL_TYPE == 'RESEND'">
+               WHERE ESB_TX_ID = #{RESEND_TX_ID}
+              	
+              	ORDER BY USER_GUID ASC
+                    ) as t1
+            ) as t2
+			</when>
+			<when test="ESB_POLL_TYPE == 'REMOTE'">
+				WHERE ${ESB_WHERE}
+              
+              ORDER BY USER_GUID ASC
+                    ) as t1
+            ) as t2
+			</when>
+		</choose>			
+	</select>
+
+	<update id="SOURCE_UPDATE" parameterType="hashmap">
+		UPDATE TEMP_USER_INFO
+        <if test="log_state != 'F'.toString()" >
+			SET ESB_STATE_CD = 'P' ,
+            ESB_TX_ID = #{ESB_TX_ID} ,
+	 	    ESB_TIME = #{ESB_TIME}
+		    WHERE USER_GUID = #{USER_GUID}
+		</if>
+		<if test="log_state == 'F'.toString()" >
+			SET ESB_STATE_CD = 'N' 
+          	WHERE ESB_TX_ID = #{TX_ID,jdbcType=VARCHAR}
+		</if>
+	</update>
+
+	<update id="SOURCE_RESULT_UPDATE" parameterType="hashmap">
+		UPDATE TEMP_USER_INFO
+		SET ESB_STATE_CD = #{ESB_STATE_CD} , 
+		    ESB_RESULT   = #{ESB_RESULT, jdbcType=VARCHAR}  ,
+      		ESB_TIME 	 = #{ESB_TIME , jdbcType=VARCHAR}
+		WHERE ESB_TX_ID  = #{ESB_TX_ID,jdbcType=VARCHAR}
+	</update>
+</mapper>

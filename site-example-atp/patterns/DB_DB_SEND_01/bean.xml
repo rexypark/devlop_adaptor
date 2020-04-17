@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" id="propertyConfigurer">
+        <property name="locations">
+            <list>
+                <value>classpath:DB_DB_SEND_01.properties</value>
+            </list>
+        </property>
+    </bean>
+    <!-- 어뎁터 정보 bean -->
+    <bean class="com.mb.indigo2.springsupport.AdaptorConfigBean" id="adaptorBean">
+        <property name="adaptorName" value="DB_DB_SEND_02"/>
+        <property name="port" value="26001"/>
+        <property name="heartBeatInterval" value="60"/>
+        <property name="socketTimeOut" value="60"/>
+        <property name="heartbeatMsgType" value="xml"/>
+        <property name="netChkList">
+            <list/>
+        </property>
+    </bean>
+    <!-- jmsTemplate bean -->
+    <bean class="org.springframework.jms.core.JmsTemplate" id="jmsTemplate">
+        <description/>
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="deliveryMode" value="1"/>
+        <property name="priority" value="1"/>
+        <property name="timeToLive" value="0"/>
+        <property name="pubSubDomain" value="false"/>
+        <property name="explicitQosEnabled" value="true"/>
+        <property name="sessionTransacted" value="false"/>
+    </bean>
+  
+  	<!-- 
+  		  어뎁터 리스너 bean 
+  	     
+  	     messageSelector - 인터페이스 이름 설정
+  		 destinationName - 수신 Queue 설정 (결과 수신)
+  		 messageListener - 실행 bean 설정
+  		 
+    -->
+    <bean
+        class="org.springframework.jms.listener.DefaultMessageListenerContainer" id="AdaptorTemplateMessageListenerContainer">
+        <description>AdaptorTemplateMessageListenerContainer</description>
+        <property name="concurrentConsumers" value="1"/>
+        <property name="connectionFactory" ref="jmsConnectionFactory"/>
+        <property name="destinationName" value="REPL.DB.001"/>
+        <property name="messageListener" ref="iservice"/>
+        <property name="messageSelector" value="if_id='DB_INTERFACE_001'"/>
+        <property name="sessionTransacted" value="true"/>
+        <property name="receiveTimeout" value="5000"/>
+        <property name="pubSubDomain" value="false"/>
+    </bean>
+  
+
+	<!-- 
+	
+		어뎁터 스케줄 bean
+		
+		 targetObject  -  스케줄러 실행 시 동작 메소드 bean
+		cronExpression -  cron 방식 스케줄러 동작 시간 지정
+		     args      -  사용  interface 지정
+	
+	 -->
+    <bean class="com.indigo.esb.schedule.OldScheduleBean" id="adaptorTemplateSchedule">
+       <description>adaptorTemplateSchedule</description>
+       <property name="targetObject" ref="iservice"/>
+       <property name="threadCount" value="1"/>
+       <property name="timeList">
+           <list>
+               <value>[cronExpression=0/10 * * * * ?,args=DB_INTERFACE_001,concurrent=false]</value>
+           </list>
+       </property>
+
+    </bean>
+  
+   <!-- 
+	   iservice bean 
+	   
+	   com.indigo.esb.std.IndigoCustomAdaptor 클래스 실행
+	   Listener / Scheduler 실행 시 동작하는 bean
+	   > onMessagge, onSigner 메소드 실행
+   -->
+   <bean autowire="default"
+        class="com.indigo.esb.std.IndigoCustomAdaptor"
+        dependency-check="default" id="iservice" lazy-init="default">
+        <description><![CDATA[]]></description>
+        <property name="interfaceList" ref="interfaceList">
+            <description><![CDATA[]]></description>
+        </property>
+        <property name="onSignalPatternMap" ref="onSignalPatternMap">
+            <description><![CDATA[]]></description>
+        </property>
+        <property name="onMessagePatternMap" ref="onMessagePatternMap">
+            <description><![CDATA[]]></description>
+        </property>
+        <property name="direction" value="source"/>
+    </bean>
+  
+  <import resource="adaptor_template.xml"/>
+  <import resource="classpath:commons_configure.xml"/>
+    
+</beans>
